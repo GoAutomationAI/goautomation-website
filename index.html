@@ -65,7 +65,7 @@
   .wa-tag { font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--green); font-weight: 600; margin-bottom: 4px; }
   .wa-tick { color: #53BDEB; margin-left: 4px; font-size: 11px; }
   .badge-float { position: absolute; top: -16px; right: -16px; background: var(--warn); color: white; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: var(--radius-pill); box-shadow: 0 4px 16px rgba(255,107,53,.4); white-space: nowrap; }
-  .customise-bubble { position: absolute; bottom: -18px; left: -12px; background: white; border: 1px solid var(--border-mid); border-radius: 12px; padding: 8px 14px; font-size: 12px; font-weight: 600; color: var(--navy); box-shadow: 0 4px 16px rgba(11,31,58,0.12); white-space: nowrap; display: flex; align-items: center; gap: 6px; z-index: 2; }
+  .customise-bubble { position: absolute; top: 50%; transform: translateY(-50%); left: 78%; background: white; border: 1px solid var(--border-mid); border-radius: 12px; padding: 8px 14px; font-size: 12px; font-weight: 600; color: var(--navy); box-shadow: 0 4px 16px rgba(11,31,58,0.12); white-space: nowrap; display: flex; align-items: center; gap: 6px; z-index: 2; }
   .customise-bubble::before { content: '✏️'; font-size: 14px; }
 
   section { padding: 100px 24px; }
@@ -285,7 +285,6 @@
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <div class="hero-eyebrow">Built for Mortgage Firms with 3+ Advisers</div>
       <h1>More conversions.<br>Better client service.<br><em>Significantly reduced<br>compliance risk.</em></h1>
       <p class="hero-sub">More leads converted. More appointments booked. More mortgages and protection cases completed every month — with less admin, less chasing, and significantly less compliance risk. Our AI runs the entire lead and customer journey through WhatsApp, so your advisers spend their time doing what only they can do: advising and closing. And we integrate with your existing systems to maximise your end to end process.</p>
       <div class="hero-actions">
