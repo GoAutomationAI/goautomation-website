@@ -160,7 +160,7 @@
 
   .pricing { background: var(--offwhite); }
   .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 980px; margin: 0 auto; }
-  .pricing-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 32px; position: relative; transition: box-shadow .25s; }
+  .pricing-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 32px; position: relative; transition: box-shadow .25s; display: flex; flex-direction: column; }
   .pricing-card:hover { box-shadow: var(--shadow-hover); }
   .pricing-card.featured { background: var(--navy); border-color: var(--navy); transform: scale(1.03); }
   .pricing-popular { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--green); color: white; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 5px 16px; border-radius: var(--radius-pill); white-space: nowrap; }
@@ -182,9 +182,9 @@
   .pricing-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--slate); margin-bottom: 10px; line-height: 1.5; }
   .pricing-card.featured .pricing-feature { color: rgba(255,255,255,.75); }
   .pricing-feature::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
-  .btn-light { display: block; width: 100%; text-align: center; border: 1px solid var(--border-mid); color: var(--navy); text-decoration: none; padding: 14px; border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; margin-top: 24px; transition: background .2s,border-color .2s; }
+  .btn-light { display: block; width: 100%; text-align: center; border: 1px solid var(--border-mid); color: var(--navy); text-decoration: none; padding: 14px; border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; margin-top: auto; padding-top: 14px; transition: background .2s,border-color .2s; }
   .btn-light:hover { background: var(--offwhite); border-color: var(--navy); }
-  .btn-dark { display: block; width: 100%; text-align: center; background: var(--green); color: white; text-decoration: none; padding: 14px; border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; margin-top: 24px; transition: background .2s,transform .15s; box-shadow: 0 4px 16px rgba(0,196,122,.3); }
+  .btn-dark { display: block; width: 100%; text-align: center; background: var(--green); color: white; text-decoration: none; padding: 14px; border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; margin-top: auto; transition: background .2s,transform .15s; box-shadow: 0 4px 16px rgba(0,196,122,.3); }
   .btn-dark:hover { background: var(--green-dark); transform: translateY(-1px); }
 
   .faq-list { max-width: 720px; margin: 0 auto; }
@@ -263,7 +263,7 @@
 <body>
 
 <nav>
-  <a href="#" class="nav-logo"><img src="./favicon/favicon.svg" alt="Go Automation logo" style="width:28px;height:28px;">Go Automation</a>
+  <a href="#" class="nav-logo"><img src="./favicon/GoAutomationNameLogo.png" alt="Go Automation logo" style="height:28px;width:auto;"></a>
   <ul class="nav-links">
     <li><a href="#compliance">Compliance</a></li>
     <li><a href="#journeys">AI Journeys</a></li>
@@ -610,7 +610,7 @@
         <div class="pricing-feature">Adviser app for compliant messaging</div>
         <div class="pricing-feature">Adviser notifications on all responses</div>
         <div class="pricing-feature">FCA-compliant conversation logging</div>
-        <a href="#contact" class="btn-light">Get Started</a>
+        <a href="#contact" class="btn-light">Talk to Us →</a>
       </div>
       <div class="pricing-card featured">
         <div class="pricing-popular">Most Popular</div>
@@ -635,7 +635,7 @@
         <div class="pricing-feature">Consumer Duty touchpoint journeys</div>
         <div class="pricing-feature">Ad-hoc adviser WhatsApp messaging</div>
         <div class="pricing-feature">Monthly reporting and optimisation</div>
-        <a href="#contact" class="btn-dark">Book a Demo →</a>
+        <a href="#contact" class="btn-dark">Talk to Us →</a>
       </div>
       <div class="pricing-card">
         <div class="offer-badge">🎁 Setup fee waived</div>
@@ -655,10 +655,10 @@
         <div class="pricing-feature">Database reactivation campaigns</div>
         <div class="pricing-feature">Optional mortgage CRM available</div>
         <div class="pricing-feature">Priority support and optimisation</div>
-        <a href="#contact" class="btn-light">Talk to Us</a>
+        <a href="#contact" class="btn-light">Talk to Us →</a>
       </div>
     </div>
-    <p style="text-align:center;margin-top:32px;font-size:14px;color:var(--slate);">All prices exclude VAT. All plans include WhatsApp Business setup, calendar integration, and full onboarding. Changes and additions after go-live are quoted separately. <a href="#contact" style="color:var(--green);font-weight:600;">Talk to us about your specific needs →</a></p>
+    <p style="text-align:center;margin-top:32px;font-size:14px;color:var(--slate);">All prices exclude VAT. All plans include WhatsApp Business setup, calendar integration, and full onboarding. Changes and additions after go-live are quoted separately. Whatsapp costs are billed at cost in addition to the quoted fees. <a href="#contact" style="color:var(--green);font-weight:600;">Talk to us about your specific needs →</a></p>
   </div>
 </section>
 
@@ -752,7 +752,7 @@
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <a href="#" class="nav-logo" style="color:white;"><img src="./favicon/favicon.svg" alt="Go Automation logo" style="width:28px;height:28px;">Go Automation</a>
+        <a href="#" class="nav-logo" style="color:white;"><img src="./favicon/GoAutomationNameLogo.png" alt="Go Automation logo" style="height:28px;width:auto;"></a>
         <p>AI-powered WhatsApp journeys for mortgage brokers. Convert more leads, deliver better client service, and significantly reduce your firm's compliance risk.</p>
         <div class="footer-contact">📞 0161 514 1260<br>✉ hello@goautomation.ai</div>
       </div>
