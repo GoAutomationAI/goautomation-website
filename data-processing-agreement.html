@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Data Processing Agreement — Go Automation AI Ltd</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --navy: #0B1F3A; --green: #00C47A; --slate: #5B7080; --offwhite: #F7F9FB; --border: rgba(11,31,58,0.10); --radius: 12px; }
+body { font-family: 'Inter', sans-serif; color: var(--navy); background: var(--offwhite); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+nav { background: var(--navy); padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo img { height: 48px; width: 48px; border-radius: 50%; object-fit: contain; }
+.nav-logo-text { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 19px; color: white; line-height: 1.1; }
+.nav-logo-sub { font-size: 11px; font-weight: 600; color: var(--green); letter-spacing: 0.04em; }
+.nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 999px; transition: all 0.2s; }
+.nav-back:hover { color: white; border-color: rgba(255,255,255,0.5); }
+.doc-wrap { max-width: 800px; margin: 0 auto; padding: 60px 24px 80px; }
+.doc-header { background: var(--navy); border-radius: var(--radius) var(--radius) 0 0; padding: 40px 48px 36px; }
+.doc-header h1 { font-family: 'Sora', sans-serif; font-size: 36px; font-weight: 700; color: white; margin-bottom: 10px; }
+.doc-meta { font-size: 14px; color: rgba(255,255,255,0.65); }
+.doc-body { background: white; border-radius: 0 0 var(--radius) var(--radius); padding: 48px; box-shadow: 0 4px 24px rgba(11,31,58,0.08); }
+.doc-section { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.doc-section h2 { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; gap: 12px; align-items: center; }
+.doc-section h2 .num { color: var(--green); font-size: 13px; font-weight: 700; background: rgba(0,196,122,0.1); padding: 3px 8px; border-radius: 6px; min-width: 32px; text-align: center; }
+.doc-section p { font-size: 15px; color: var(--slate); line-height: 1.75; margin-bottom: 12px; }
+.doc-section p:last-child { margin-bottom: 0; }
+.doc-section ul { list-style: none; margin: 8px 0; }
+.doc-section ul li { font-size: 15px; color: var(--slate); padding: 5px 0 5px 22px; position: relative; line-height: 1.65; }
+.doc-section ul li::before { content: "✓"; color: var(--green); font-weight: 700; position: absolute; left: 0; }
+.doc-section table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.doc-section table th { background: var(--offwhite); color: var(--slate); font-weight: 600; padding: 12px 16px; text-align: left; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.doc-section table td { padding: 12px 16px; border-top: 1px solid var(--border); color: var(--slate); }
+.doc-section table td:last-child { color: var(--green); font-weight: 600; }
+.contact-box { background: var(--navy); border-radius: var(--radius); padding: 28px 32px; margin-top: 40px; }
+.contact-box h3 { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 12px; }
+.contact-box p { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 6px; }
+.contact-box a { color: var(--green); text-decoration: none; }
+.doc-footer { text-align: center; margin-top: 32px; font-size: 13px; color: var(--slate); line-height: 1.8; }
+.cookie-card { background: var(--offwhite); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.cookie-card h4 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.cookie-card p { font-size: 13px; color: var(--slate); }
+.cookie-badge { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+.badge-required { background: rgba(0,196,122,0.1); color: var(--green); border: 1px solid rgba(0,196,122,0.2); }
+.badge-consent { background: rgba(11,31,58,0.06); color: var(--slate); border: 1px solid var(--border); }
+@media(max-width:640px){ nav{padding:0 16px;} .doc-body{padding:28px 20px;} .doc-wrap{padding:32px 12px 60px;} .doc-header{padding:28px 20px;} .doc-header h1{font-size:26px;} }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="data:image/png;base64,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" alt="Go Automation">
+    <div>
+      <div class="nav-logo-text">Go Automation</div>
+      <div class="nav-logo-sub">WhatsApp AI Platform</div>
+    </div>
+  </a>
+  <a href="index.html" class="nav-back">← Back to main site</a>
+</nav>
+<div class="doc-wrap">
+  <div class="doc-header">
+    <h1>Data Processing Agreement</h1>
+    <div class="doc-meta">UK GDPR Article 28 &nbsp;&middot;&nbsp; Version 1.6 &nbsp;&middot;&nbsp; Effective 23 April 2026</div>
+  </div>
+  <div class="doc-body">
+    <div class="doc-section"><h2><span class="num">01</span>Purpose</h2>
+      <p>This Data Processing Agreement (&ldquo;Agreement&rdquo;) forms part of the agreement between Go Automation AI Ltd (&ldquo;Processor&rdquo;) and the Client (&ldquo;Controller&rdquo;). It sets out the obligations of both parties in accordance with Article 28 of the UK General Data Protection Regulation (UK GDPR) where Go Automation AI Ltd processes personal data on behalf of the Controller.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">02</span>Subject matter</h2>
+      <p>Go Automation AI Ltd provides AI-powered business automation services including CRM automation, customer communications, workflow automation, appointment booking and related software services. Processing of personal data is limited to the delivery of those contracted services.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">03</span>Duration</h2>
+      <p>This Agreement remains in force for as long as Go Automation AI Ltd processes personal data on behalf of the Controller under the Service Agreement.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">04</span>Nature and purpose of processing</h2>
+      <ul><li>CRM automation and AI-powered customer communications</li><li>WhatsApp Business messaging and SMS messaging</li><li>Lead management and workflow automation</li><li>Appointment scheduling and calendar synchronisation</li><li>Customer support, reporting and administration</li></ul>
+    </div>
+    <div class="doc-section"><h2><span class="num">05</span>Categories of personal data</h2>
+      <ul><li>Full name, email address, telephone number, postal address</li><li>Property information, appointment details, communication history</li><li>CRM records, lead information, customer notes</li><li>Other information supplied by the Controller</li></ul>
+    </div>
+    <div class="doc-section"><h2><span class="num">06</span>Categories of data subjects</h2>
+      <ul><li>Existing customers and prospective customers</li><li>Employees, business contacts and introducers</li><li>Other individuals whose information is supplied by the Controller</li></ul>
+    </div>
+    <div class="doc-section"><h2><span class="num">07</span>Controller obligations</h2>
+      <p>The Client (Controller) retains full responsibility for compliance with UK GDPR throughout. Go Automation AI Ltd acts solely as a Data Processor, processing personal data only on documented instructions from the Controller. The Controller confirms that it has an appropriate lawful basis for processing, has provided all necessary privacy information to data subjects, and remains accountable as Data Controller at all times — including for any onward transfer instructions given to Go Automation AI Ltd.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">08</span>Processor obligations</h2>
+      <ul><li>Process personal data only on documented instructions from the Controller</li><li>Ensure all authorised persons are subject to confidentiality obligations</li><li>Implement appropriate technical and organisational security measures</li><li>Assist the Controller where reasonably necessary to comply with UK GDPR</li><li>Notify the Controller without undue delay after becoming aware of a personal data breach affecting Controller data</li><li>Maintain appropriate records of processing where required</li></ul>
+    </div>
+    <div class="doc-section"><h2><span class="num">09</span>Security measures</h2>
+      <ul><li>Password-protected systems and role-based access controls</li><li>Secure cloud-hosted infrastructure with encrypted communications</li><li>Regular backups, software updates and security monitoring</li><li>Authentication controls and logging of platform activity</li></ul>
+    </div>
+    <div class="doc-section"><h2><span class="num">10</span>Approved sub-processors</h2>
+      <ul><li><strong>GoHighLevel</strong> — CRM and automation platform</li><li><strong>OpenAI</strong> — AI language model processing</li><li><strong>Anthropic (Claude)</strong> — AI language model processing</li><li><strong>Meta Platforms (incl. WhatsApp Business)</strong> — messaging infrastructure</li><li><strong>Microsoft</strong> — communications and productivity services</li><li><strong>Google</strong> — communications and productivity services</li><li>Video meeting providers (Microsoft Teams, Zoom, Google Meet)</li><li>Email delivery providers, SMS providers, cloud hosting providers</li></ul>
+      <p>Go Automation AI Ltd shall ensure that any appointed sub-processor is subject to appropriate contractual obligations where required by law.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">11</span>International transfers</h2>
+      <p>Where personal data is transferred outside the United Kingdom, Go Automation AI Ltd shall ensure appropriate safeguards are implemented in accordance with UK GDPR.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">12</span>Confidentiality</h2>
+      <p>All personal data processed on behalf of the Controller shall be treated as confidential. Go Automation AI Ltd shall not disclose personal data except where required to deliver the contracted services, where required by law, or where instructed by the Controller.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">13</span>Artificial intelligence</h2>
+      <p>Go Automation AI Ltd provides AI-powered automation using third-party large language model providers including OpenAI and Anthropic. AI services operate only within workflows configured by the Controller and solely for the purpose of delivering the contracted services. Personal data processed through AI services is used for no other purpose. Go Automation AI Ltd does not intentionally use Controller personal data to train publicly available AI models without the Controller&rsquo;s explicit agreement.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">14</span>Data subject rights</h2>
+      <p>Go Automation AI Ltd shall provide reasonable assistance to enable the Controller to respond to Subject Access Requests, Rectification Requests, Erasure Requests, Restriction Requests, Objection Requests, and Data Portability Requests.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">15</span>Personal data breaches</h2>
+      <p>If Go Automation AI Ltd becomes aware of a personal data breach affecting Controller data, it shall notify the Controller without undue delay and provide reasonable information to assist the Controller in meeting its legal obligations.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">16</span>Retention and deletion</h2>
+      <p>Upon termination of the Service Agreement and subject to applicable legal obligations, Go Automation AI Ltd shall, at the Controller&rsquo;s instruction, securely delete personal data or return personal data to the Controller.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">17</span>Audits</h2>
+      <p>Upon reasonable written request, Go Automation AI Ltd shall make available information reasonably necessary to demonstrate compliance with this Agreement.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">18</span>Liability</h2>
+      <p>Nothing within this Agreement limits or excludes liability where such limitation is prohibited by law.</p>
+    </div>
+    <div class="doc-section"><h2><span class="num">19</span>Governing law</h2>
+      <p>This Agreement shall be governed by the laws of England and Wales.</p>
+    </div>
+    <div class="contact-box"><h3>Go Automation AI Ltd</h3><p>Suite A4, Skylon Court, Coldnose Road, Rotherwas, Hereford, England, HR2 6JS</p><p><a href="mailto:hello@goautomation.ai">hello@goautomation.ai</a> &nbsp;&middot;&nbsp; goautomation.ai</p><p style="margin-top:12px;font-size:13px;color:rgba(255,255,255,0.55);">Document version 1.6 &nbsp;&middot;&nbsp; Effective 23 April 2026</p></div>
+  </div>
+  <div class="doc-footer">
+  <p>Go Automation AI Ltd &mdash; Registered in England and Wales &mdash; Company No. 14400611 &mdash; VAT No. GB485558833</p>
+  <p>Registered office: Suite A4, Skylon Court, Coldnose Road, Rotherwas, Hereford, England, HR2 6JS</p>
+  <p style="margin-top:8px;">&copy; 2025 Go Automation AI Ltd. All rights reserved.</p>
+</div>
+</div>
+</body></html>

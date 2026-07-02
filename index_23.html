@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Go Automation — WhatsApp AI for Mortgage Brokers</title>
+<meta name="description" content="AI-powered WhatsApp journeys for mortgage brokers. Lead conversion, protection, remortgage outreach and full FCA and Consumer Duty compliant communication — all automated.">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0B1F3A; --navy-mid: #132D52; --green: #00C47A; --green-dark: #009E62;
+    --green-pale: #E6FBF2; --slate: #5B7080; --slate-light: #8FA3B1;
+    --offwhite: #F7F9FB; --white: #FFFFFF; --border: rgba(11,31,58,0.10);
+    --border-mid: rgba(11,31,58,0.18); --warn: #FF6B35; --warn-pale: #FFF1EB;
+    --radius: 12px; --radius-lg: 20px; --radius-pill: 999px;
+    --font-display: 'Sora', sans-serif; --font-body: 'Inter', sans-serif;
+    --shadow-hover: 0 8px 32px rgba(11,31,58,0.14);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); color: var(--navy); background: var(--white); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 100; padding: 0 24px; height: 90px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; display: inline-block; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--slate); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-cta { background: var(--green) !important; color: var(--white) !important; padding: 10px 22px !important; border-radius: var(--radius-pill) !important; font-weight: 600 !important; }
+  .nav-cta:hover { background: var(--green-dark) !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--navy); border-radius: 2px; }
+  .mobile-menu { display: none; }
+
+  /* HERO */
+  .hero { min-height: 100vh; background: var(--navy); display: flex; align-items: center; padding: 60px 24px 80px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -120px; right: -120px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,196,122,0.12) 0%, transparent 70%); pointer-events: none; }
+  .hero-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; position: relative; z-index: 1; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,196,122,0.12); border: 1px solid rgba(0,196,122,0.25); color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: var(--radius-pill); margin-bottom: 24px; }
+  .hero-eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);} }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(32px,3.8vw,52px); font-weight: 700; line-height: 1.1; color: var(--white); margin-bottom: 24px; }
+  .hero h1 em { font-style: normal; color: var(--green); }
+  .hero-sub { font-size: 16px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 16px; max-width: 480px; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
+  .btn-primary { background: var(--green); color: var(--white); padding: 16px 32px; border-radius: var(--radius-pill); font-weight: 600; font-size: 16px; text-decoration: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(0,196,122,0.35); }
+  .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
+  .btn-secondary { background: transparent; color: rgba(255,255,255,0.85); padding: 16px 32px; border-radius: var(--radius-pill); font-weight: 500; font-size: 16px; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); display: inline-flex; align-items: center; gap: 8px; transition: border-color 0.2s,color 0.2s,background 0.2s; }
+  .btn-secondary:hover { border-color: rgba(255,255,255,.5); color: var(--white); background: rgba(255,255,255,.06); }
+
+  /* WHATSAPP MOCKUP */
+  .wa-phone { background: var(--navy-mid); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; overflow: hidden; max-width: 340px; margin: 0 auto; box-shadow: 0 24px 80px rgba(0,0,0,0.4); }
+  .wa-header { background: #075E54; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .wa-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: white; flex-shrink: 0; }
+  .wa-hname { font-size: 14px; font-weight: 600; color: white; }
+  .wa-status { font-size: 11px; color: rgba(255,255,255,.65); }
+  .wa-body { background: #0B2027; padding: 16px; min-height: 320px; display: flex; flex-direction: column; gap: 10px; }
+  .wa-bubble { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+  .wa-bubble.received { background: #1F2C33; color: #E9EDF0; border-radius: 0 12px 12px 12px; align-self: flex-start; }
+  .wa-bubble.sent { background: #005C4B; color: #E9EDF0; border-radius: 12px 12px 0 12px; align-self: flex-end; }
+  .wa-time { font-size: 10px; color: rgba(255,255,255,.4); text-align: right; margin-top: 4px; }
+  .wa-tag { font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--green); font-weight: 600; margin-bottom: 4px; }
+  .wa-tick { color: #53BDEB; margin-left: 4px; font-size: 11px; }
+  .badge-float { position: absolute; top: -16px; right: -16px; background: var(--warn); color: white; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: var(--radius-pill); box-shadow: 0 4px 16px rgba(255,107,53,.4); white-space: nowrap; }
+  .customise-bubble { position: absolute; top: 18px; right: -16px; background: var(--warn); color: white; font-size: 11px; font-weight: 700; padding: 7px 14px; border-radius: var(--radius-pill); box-shadow: 0 4px 16px rgba(255,107,53,.4); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+
+  /* SECTIONS */
+  section { padding: 100px 24px; }
+  .container { max-width: 1120px; margin: 0 auto; }
+  .section-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+  .section-title { font-family: var(--font-display); font-size: clamp(28px,3vw,42px); font-weight: 700; color: var(--navy); line-height: 1.2; margin-bottom: 20px; }
+  .section-sub { font-size: 18px; color: var(--slate); max-width: 640px; line-height: 1.7; margin-bottom: 56px; }
+
+  /* PROFIT */
+  .profit { background: var(--navy); }
+  .profit-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+  .profit-card { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); padding: 32px; }
+  .profit-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+  .profit-card h4 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: white; margin-bottom: 12px; }
+  .profit-card p { font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.7; }
+  .profit-also { background: rgba(0,196,122,.08); border: 1px solid rgba(0,196,122,.15); border-radius: var(--radius); padding: 20px 24px; margin-top: 24px; }
+  .profit-also p { font-size: 13px; color: rgba(255,255,255,.6); line-height: 1.6; }
+  .profit-also strong { color: var(--green); }
+
+  /* WHATSAPP STATS */
+  .wa-stats { background: var(--navy); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: rgba(255,255,255,.08); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 56px; }
+  .stat-cell { background: var(--navy); padding: 36px 20px; text-align: center; }
+  .stat-num { font-family: var(--font-display); font-size: 44px; font-weight: 700; color: var(--green); line-height: 1; }
+  .stat-sup { font-size: 22px; vertical-align: super; }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,.65); margin-top: 8px; line-height: 1.4; }
+  .wa-feats { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .wa-feat { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); padding: 28px; }
+  .wa-feat-icon { font-size: 28px; margin-bottom: 14px; }
+  .wa-feat h4 { font-size: 16px; font-weight: 600; color: white; margin-bottom: 8px; }
+  .wa-feat p { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.6; }
+
+  /* JOURNEYS */
+  .journey { background: var(--offwhite); }
+  .journey-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 24px; }
+  .journey-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: box-shadow .25s,transform .25s; position: relative; overflow: hidden; }
+  .journey-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--green); opacity: 0; transition: opacity .25s; }
+  .journey-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+  .journey-card:hover::before { opacity: 1; }
+  .journey-icon { width: 52px; height: 52px; background: var(--green-pale); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 20px; }
+  .journey-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .journey-card p { font-size: 14px; color: var(--slate); line-height: 1.65; }
+  .journey-card ul { list-style: none; margin-top: 14px; }
+  .journey-card ul li { font-size: 13px; color: var(--slate); padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; }
+  .journey-card ul li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* COMPLIANCE */
+  .compliance { background: var(--warn-pale); }
+  .compliance-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+  .alert-box { background: white; border: 1px solid rgba(255,107,53,.2); border-left: 4px solid var(--warn); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 20px; }
+  .alert-box h4 { font-weight: 600; font-size: 15px; color: var(--warn); margin-bottom: 8px; }
+  .alert-box p { font-size: 14px; color: var(--slate); line-height: 1.6; }
+  .compliance-solve { background: var(--navy); border-radius: var(--radius-lg); padding: 40px; }
+  .compliance-solve h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: white; margin-bottom: 24px; }
+  .solve-item { display: flex; gap: 14px; margin-bottom: 20px; align-items: flex-start; }
+  .solve-icon { width: 36px; height: 36px; flex-shrink: 0; background: rgba(0,196,122,.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .solve-item p { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.6; }
+  .solve-item strong { color: white; font-weight: 600; }
+  .fca-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,196,122,.1); border: 1px solid rgba(0,196,122,.2); color: var(--green); font-size: 12px; font-weight: 600; padding: 8px 16px; border-radius: var(--radius-pill); margin-top: 20px; }
+
+  /* CONSUMER DUTY */
+  .consumer-duty { background: var(--offwhite); }
+  .cd-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+  .cd-badge { display: inline-flex; align-items: center; gap: 8px; background: #EEF2FF; border: 1px solid #C7D2FE; color: #4338CA; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 8px 16px; border-radius: var(--radius-pill); margin-bottom: 20px; }
+  .cd-touchpoints { display: flex; flex-direction: column; gap: 14px; }
+  .cd-touchpoint { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start; }
+  .cd-num { width: 36px; height: 36px; flex-shrink: 0; background: var(--green-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: var(--green); }
+  .cd-touchpoint h5 { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .cd-touchpoint p { font-size: 13px; color: var(--slate); line-height: 1.6; }
+
+  /* INTEGRATIONS */
+  .intg-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 16px; }
+  .intg-pill { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: 15px; color: var(--navy); transition: box-shadow .2s,transform .2s; }
+  .intg-pill:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+  .intg-icon { font-size: 28px; flex-shrink: 0; }
+
+  /* HOW IT WORKS */
+  .hiw { background: var(--navy); }
+  .hiw-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+  .hiw-steps::before { content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 2px; background: rgba(0,196,122,.25); z-index: 0; }
+  .hiw-step { text-align: center; padding: 0 16px; position: relative; z-index: 1; }
+  .hiw-num { width: 56px; height: 56px; background: var(--navy-mid); border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--green); margin: 0 auto 20px; }
+  .hiw-step h4 { font-size: 15px; font-weight: 600; color: white; margin-bottom: 8px; }
+  .hiw-step p { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .testi-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: box-shadow .25s; }
+  .testi-card:hover { box-shadow: var(--shadow-hover); }
+  .testi-stars { color: #F59E0B; font-size: 16px; margin-bottom: 16px; }
+  .testi-text { font-size: 15px; color: var(--slate); line-height: 1.7; margin-bottom: 24px; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; color: white; }
+  .testi-name { font-weight: 600; font-size: 15px; color: var(--navy); }
+  .testi-role { font-size: 12px; color: var(--slate-light); }
+
+  /* PRICING */
+  .pricing { background: var(--offwhite); }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; max-width: 980px; margin: 0 auto; }
+  .pricing-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 32px; position: relative; transition: box-shadow .25s; }
+  .pricing-card:hover { box-shadow: var(--shadow-hover); }
+  .pricing-card.featured { background: var(--navy); border-color: var(--navy); transform: scale(1.03); }
+  .pricing-popular { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--green); color: white; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 5px 16px; border-radius: var(--radius-pill); white-space: nowrap; }
+  .offer-badge { display: inline-flex; align-items: center; gap: 6px; background: #FEF3C7; border: 1px solid #FCD34D; color: #92400E; font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: var(--radius-pill); margin-bottom: 16px; }
+  .pricing-card.featured .offer-badge { background: rgba(252,211,77,.15); border-color: rgba(252,211,77,.3); color: #FCD34D; }
+  .pricing-tier { font-size: 13px; font-weight: 600; color: var(--slate); margin-bottom: 8px; }
+  .pricing-card.featured .pricing-tier { color: rgba(255,255,255,.65); }
+  .pricing-price { font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--navy); line-height: 1; }
+  .pricing-card.featured .pricing-price { color: white; }
+  .pricing-price sup { font-size: 20px; vertical-align: super; }
+  .pricing-per { font-size: 13px; color: var(--slate); margin-top: 4px; margin-bottom: 6px; }
+  .pricing-card.featured .pricing-per { color: rgba(255,255,255,.6); }
+  .pricing-saving { font-size: 12px; font-weight: 600; color: var(--green); margin-bottom: 24px; }
+  .pricing-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 20px; }
+  .pricing-card.featured .pricing-divider { border-color: rgba(255,255,255,.15); }
+  .journey-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+  .journey-tag { display: inline-block; background: var(--green-pale); color: var(--green-dark); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: var(--radius-pill); margin: 2px 2px 2px 0; }
+  .pricing-card.featured .journey-tag { background: rgba(0,196,122,.15); color: var(--green); }
+  .pricing-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--slate); margin-bottom: 10px; line-height: 1.5; }
+  .pricing-card.featured .pricing-feature { color: rgba(255,255,255,.75); }
+  .pricing-feature::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .btn-light { display: block; width: 100%; text-align: center; border: 1px solid var(--border-mid); color: var(--navy); text-decoration: none; padding: 14px; border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; margin-top: 24px; transition: background .2s,border-color .2s; }
+  .btn-light:hover { background: var(--offwhite); border-color: var(--navy); }
+  .btn-dark { display: block; width: 100%; text-align: center; background: var(--green); color: white; text-decoration: none; padding: 14px; border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; margin-top: 24px; transition: background .2s,transform .15s; box-shadow: 0 4px 16px rgba(0,196,122,.3); }
+  .btn-dark:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+  /* FAQ */
+  .faq-list { max-width: 720px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q { width: 100%; background: none; border: none; cursor: pointer; text-align: left; padding: 24px 0; font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--navy); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-q:hover { color: var(--green); }
+  .faq-chevron { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--offwhite); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: transform .25s; }
+  .faq-a { font-size: 15px; color: var(--slate); line-height: 1.7; padding-bottom: 24px; display: none; }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); }
+  .faq-item.open .faq-a { display: block; }
+
+  /* CTA */
+  .cta-section { background: var(--navy); text-align: center; padding: 100px 24px; }
+  .cta-section h2 { font-family: var(--font-display); font-size: clamp(28px,3.5vw,46px); font-weight: 700; color: white; margin-bottom: 16px; }
+  .cta-section p { font-size: 18px; color: rgba(255,255,255,.7); margin-bottom: 40px; }
+
+  /* CONTACT */
+  .contact { background: var(--offwhite); }
+  .contact-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-form { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 1px solid var(--border-mid); border-radius: var(--radius); font-family: var(--font-body); font-size: 15px; color: var(--navy); background: var(--offwhite); transition: border-color .2s,box-shadow .2s; outline: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(0,196,122,.12); background: white; }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--slate); margin-bottom: 24px; }
+  .form-consent input { width: auto; margin-top: 2px; flex-shrink: 0; }
+  .btn-submit { width: 100%; background: var(--green); color: white; padding: 16px; border-radius: var(--radius-pill); font-family: var(--font-body); font-size: 16px; font-weight: 600; border: none; cursor: pointer; transition: background .2s,transform .15s; box-shadow: 0 4px 20px rgba(0,196,122,.3); }
+  .btn-submit:hover { background: var(--green-dark); transform: translateY(-1px); }
+  .contact-detail { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 20px; }
+  .contact-detail-icon { width: 44px; height: 44px; flex-shrink: 0; background: var(--green-pale); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .contact-detail-text { font-size: 14px; color: var(--slate); line-height: 1.6; }
+  .contact-detail-text strong { display: block; color: var(--navy); font-weight: 600; margin-bottom: 2px; }
+
+  /* FOOTER */
+  footer { background: #06131F; padding: 60px 24px 40px; border-top: 1px solid rgba(255,255,255,.1); }
+  .footer-inner { max-width: 1120px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,.85); margin-top: 14px; line-height: 1.7; max-width: 280px; }
+  .footer-contact { font-size: 13px; color: rgba(255,255,255,.75); margin-top: 16px; line-height: 1.8; }
+  .footer-col h5 { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,.85); text-decoration: none; margin-bottom: 10px; transition: color .2s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-bottom p { font-size: 13px; color: rgba(255,255,255,.7); }
+  .footer-legal { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-legal a { font-size: 13px; color: rgba(255,255,255,.7); text-decoration: none; transition: color .2s; }
+  .footer-legal a:hover { color: white; }
+  .footer-reg { font-size: 12px; color: rgba(255,255,255,.6); margin-top: 12px; line-height: 1.7; border-top: 1px solid rgba(255,255,255,.08); padding-top: 16px; }
+
+  /* RESPONSIVE */
+  @media(max-width:960px){
+    .hero-inner,.compliance-inner,.cd-inner,.contact-inner{grid-template-columns:1fr;gap:48px;}
+    .hero-visual{max-width:380px;margin:0 auto;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);}
+    .profit-grid{grid-template-columns:1fr 1fr;}
+    .wa-feats,.hiw-steps{grid-template-columns:repeat(2,1fr);}
+    .hiw-steps::before{display:none;}
+    .testi-grid{grid-template-columns:1fr 1fr;}
+    .pricing-grid{grid-template-columns:1fr;max-width:420px;}
+    .pricing-card.featured{transform:none;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:640px){
+    nav{padding:0 16px;}
+    .nav-links{display:none;}
+    .hamburger{display:flex;}
+    .mobile-menu.open{display:block;position:fixed;top:90px;left:0;right:0;bottom:0;background:white;padding:24px;z-index:99;overflow-y:auto;}
+    .mobile-menu a{display:block;padding:14px 0;border-bottom:1px solid var(--border);font-size:16px;font-weight:500;color:var(--navy);text-decoration:none;}
+    .mobile-menu .nav-cta{border-radius:var(--radius-pill);background:var(--green);color:white!important;padding:14px 0;text-align:center;margin-top:16px;}
+    section{padding:64px 16px;}
+    .hero{padding:100px 16px 64px;}
+    .profit-grid{grid-template-columns:1fr;}
+    .wa-feats,.hiw-steps,.testi-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAYAAACAvzbMAAAABmJLR0QA/wD/AP+gvaeTAAAgAElEQVR4nOzdd5hU5d3/8fc9ZXuvdJaydNjFrig2FAv2FhASU0zxMYlpJvGXxxTTu8mTpsYaNYq9K7YoYANEliZ16bA72+vMzsz9+2MWg7jAljlzn3Pm+7ouLhF2z/mws3u+c3eFEC6itc4ECrt/FR/w+wN/FQGpQFb3p2UCKd2/z+/+b0r3nwO0AaHu3zd0/zfU/ecArUAnUHeIX7X7f6+U2v85QjieMh1AiL7QWucDo4EhwODu3+//NQ7INpeuV4LALmDLAb/2ALu7f79VKaXNxROi96SACNvRWvuAcmAqUAFMBsYAZfy31eBWrcBWYDOwBljV/WujUipiMpgQB5MCIozqblFMBo4GJnX/fjqQYTKXDXUBG4HlxArLWmCZUmqP0VQiqUkBEQnT3bKYDpwEzOj+NcRoKOfbBSwBlnb/d6VSKmw2kkgWUkCEZbTW2cDxwMnEWhinALlGQ7lfO/A+sJhYQVmilKo3G0m4lRQQETda63TgVOBc4AxiXVIeo6FElFiX1yvAC8B/lFKdZiMJt5ACIgZEaz0amNX96xzsPwsq2XUQa5m8DDytlFprOI9wMCkgok+6WxkziBWMC4i1MoRzbSFWTF4GXlBKtRjOIxxECog4Iq11GnAWcAVwCe6fSpusOokVkoXAY0qpVsN5hM1JARE9OqhoXIx0TSWbDmLjJguBR2UFveiJFBDxEa11KnA2saJxEZBjNpGwiXbgVeBe4CmlVNBwHmETUkAEWuujgC8A85BptuLwGoAHgNuVUh+YDiPMkgKSpLrXaMwFPk1sUFyIvloO3Afcq5RqONIHC/eRApJktNZHA18k1tqQwXARD53A08BtSqmXTYcRiSMFJAlorXOAzwDXEtugUAirrAJuB+6RKcHuJwXExbTWg4AvA1/jv+dcCJEILcBdwO+UUttNhxHWkALiQlrrCuBbwKcAv+E4Irl1AU8Av1VKvWs6jIgvKSAuorU+GfgucD7y2gr7WQL8CnhGDs1yB3nIOJzW2g8sINbikG1FhBOsBn4H3K+U6jIdRvSfFBCH0lp7gMuAnwNjDccRoj+2Efv+vVPOMHEmKSAOc0DhuAUYbziOEPGwHvgFsRaJHNvrIFJAHEJrrYA5wE+ASsNxhLDCWuBHwCMyRuIMUkAcQGs9C/glsVP9hHC7KmItbCkkNicFxMa01scBfyB2hrgQyWYx8A2l1DLTQUTP5LhRG9JaD9Fa/wN4CykeInmdDLyrtX5Yaz3CdBjxSdICsRGtdQrwFWLjHLKVuhD/1Qb8FvilnOluH1JAbEJrfQFwKzDKdBYhbGwH8APgPhkfMU8KiGFa6+nAH4GZprMI4SCvERsfkTNJDJIxEEO01ula618C7yHFQ4i+Oh1YprW+VWstxxIYIi0QA7TWpxLb8rrcdBYhXGAr8CWl1CLTQZKNtEASSGud1z276jWkeAgRL6OAl7pnaxWZDpNMpAWSIFrrK4D/A0pMZxHCxfYBNyql7jUdJBlIAbGY1now8BfgEtNZhEgizwLXyWFW1pIuLAtpra8BPkSKhxCJdj5QpbX+tOkgbiYtEAtorXOJtTquNp1FCMEjxAbZ600HcRspIHGmtT4R+Bcw2nQWIcRHtgOfVkr9x3QQN5EurDjRWvu01j8C3kSKhxB2MwJ4rXvdSIrpMG4hLZA40FqPAu4HTjSdRQhxRMuAq5VSG0wHcTppgQyQ1vpaYucXSPEQwhmOAZZrrT9nOojTSQukn7TWacTWdXzedBYhRL/dB3xZKdVuOogTSQHpB631cOBR4FjTWYQQA/Y+cJlSaqvpIE4jXVh9pLU+nVgfqhQPIdxhOvCe1vps00GcRgpIL2mtldb6u8AiZDsSIdymEHhOa/0jrbU8F3tJurB6QWudDdwFXGY6ixDCck8TWzPSaDqI3UkBOQKt9STgcWCc6SxCiIRZD1yilFpvOoidSVPtMLTWZwBLkOIhRLKZACzVWp9mOoidSQE5BK31Z4DngTzTWYQQRuQDL2qtF5gOYlfShXUQrbUCfgjcjHx9ko5G0xjuBCCkIwCkKC8Aeb40lHxLJCMN/AT4sVJKmw5jJ/LTcIDuPXLuAOQdh8M1R4Js7axnW7CRvaFWAuE26rraqQt3UBdu7/597L9RNK2REF3dBeNI/MpLljcFD4pCfwaFvoz//teXTqE/g2J/JqX+LMpS8ylLyyfHm2rxv1gkwD3AF5VSIdNB7EIKSDetdT7wGHCa4Siil+rC7XzQtpd17TVs6aynOthIdbCB6s4G6sMdpuN9TIEvnbK0fEZ1F5RRqflMyiihInMwBb500/FE771KbNGhzNBCCgjw0WaIzwITTWcRnxTWUda076OqfR9Vbfv4oG0PVe372B1qNh0tLoam5DA1cxDTMgYxLXMQUzNKmZRRgk/JEKVNrQHOV0ptMx3EtKQvIFrrCcDLwFDTWURMSyTIOy07WdxczfK23bzZVE1TpNN0rITK8PiZnjWEk3NGMiN7JDNyRkpLxV72AmcppVabDmJSUhcQrfV04EWg2HSWZFYXbuelhk38p3krS5q3sba9higyVnkgD4rJGSWcnFPGzNwyzs4rl4JiXg0wWym10nQQU5K2gGitjwVeAApMZ0k2UTTvt+7m5cbNvNy0if80Vfd6AFvEeFBMzxrCrLwxzMmfwEk5I/Ak74+zSY3AeUqpt0wHMSEpv+O01jOBZ4Bs01mSRWskxDMN63m6fj2LGjdR29VmOpKrFPszmZ1XzpyCCczJH0+mVw7dS6A24CKl1CumgyRa0hUQrfW5xLZil/a/xTqjYRY1bmJh3Woer1tDa0RmPyZCmsfHrLyxXFE4hUsLJ5MlxSQR2onNznrBdJBESqoCorW+AFgIyKR8i3RGwzzfsIGHA1U83bCeNikaRmV5U7igYAJXFk7l3PxxpHp8piO5WQiYp5R61HSQREmaAqK1nkdsIZD8BFlgfUctd9es4J/7lhHoksPd7CjPl8aVRVO5btDxVGQONh3HrcLEdvJ90HSQREiKAqK1vphYy0OKRxx1RsM8Xb+e2/a9y8uNm03HEX1wdNZQvlh6LPOKK6SLK/4iwFyl1ELTQazm+gLSfcrYU0i3Vdysbt/H/+15mwdrP6A5EjQdRwxAjjeVecUVXD/4RCZnyDlpcRQith38c6aDWMnVBURrPYPYOo9M01ncYHHzNn616w2erf8QLes0XGdGzki+O3QmcwrGy6aR8dFBbIrv66aDWMW13yVa6+OJHT8rU3UHoEtHeKJuHb/d9Sbvtu40HUckQEXmYK4bdDyfKZkug+4D1waco5RabDqIFVxZQLTWFcQ2PZNFgv3UFgnxt73v8MfdS9nlkj2nRN8MT83lhiEz+PKg48jw+E3HcbIm4Ayl1ArTQeLNdQVEaz0OeAMoNZ3FiUI6wt37VvCjHa+wJ9RiOo6wgWJ/Jt8acjJfG3Ii6VJI+qsWOE0ptdZ0kHhyVQHp3lV3MTDEdBan6dIR7tq3gp/seFVaHKJHw1Jy+fbQk/nSoONIk66t/tgJzFBKbTcdJF5cU0C01rnEiscU01mcJKyj3F2zgp/ueI1tQTniQBxZWWo+/zv8dD5dMl22nO+7tcSKiCt+2FxRQLTWfmLnl59pOouTvNK4mW9sfZaq9n2mowgHmpBezO9Gnct5+eNNR3Ga14nt4uv4bRocX0C6zzC/G/i04SiOsbGjjv+3/SUWBpL6KAMRJ7PyxnDrqDlMknUkfXGXUupzpkMMlBsKyI+Bm03ncILWSIjf7nqTX+56g2A0bDqOcBG/8vKVQcfxk5GzyPWmmY7jFP+rlPqp6RAD4egCorWeC9yPw/8dVtNo7q5ZwfeqX6RGtlEXFir1Z/HrsnP4dMl001GcQAOfUUrdZzpIfzn2wau1PpXYKnPZouQwtnY28KXNT7CocZPpKCKJnJo7itvGXMy49CLTUewuBJyrlHrVdJD+cGQB0VpPApYAeaaz2FUUzR17l/Gt6ufkHA5hRLrHzw+Hn8G3h56MV2ZrHU49cJJS6kPTQfrKcQVEa50NvANMNJ3Frla17eXaTY/L1iPCFiozB3PH2Es4Omuo6Sh2tgE4TinVZDpIXziqgHTPuHoEuNR0FjsK6yg/2fEqv9z5hpwxLmzFr7zcNOxUfjD8dFk7cmhPEtvB1zE7lTqtgPwAuMV0DjuqDjawYMNCFjdvMx1FiEM6LmsY94+/krFphaaj2NV3lVK/Nh2itxxTQLTWs4AXAK/pLHZzb837XL/laVrkbA7hANneVH5bdi5fHHSs6Sh2FCW2BfyLpoP0hiMKiNZ6JLAMkCkdB2iKdHLd5qd4oPYD01GE6LPLC6fwj7EXU+BLNx3FbuqBY5RSW00HORLbFxCtdRqxPa6ONp3FThY3b2Puhw+xM+SoMTchPmZEah4Pjr+Kk7JHmI5iNyuJzczqMB3kcJwwmvVXpHh8zG173+PM1f+U4iEcb3uwkVOrbudXO98wHcVuKoF/mA5xJLZugWitrwVuM53DLjqjYa7b/BR31Sw3HUWIuLu6uILbxl4ih1d93GeVUnebDnEoti0gWuuxwPtAluksdrA92Mhl6x9gWesu01GEsExF5mAemzCP0WlymGi3NuAopdQG00F6YssC0r09+2LgONNZ7OC5hg+Zv2EhDWFbd4cKERcFvnTuH3cl5+SPMx3FLpYRGw/pMh3kYHYdA7kFKR4A3Lp7KReu+5cUD5E06sMdzFl3H3/e85bpKHZxDPC/pkP0xHYtEK31KcBrJPl6j4iO8s2tz/En+SESSexrg0/kD6PPx2O/R1WiRYEzlVKvmw5yIFu9KlrrPGLT10aazmJSWyTE1Rse5sn6daajCGHcxYWTuH/clTK4DjuACqVUg+kg+9mtgDwIfMp0DpP2hlq4YN19MlguxAGOyxrGU5MWUOpP+jk1C5VSV5oOsZ9tCojW+hrgLtM5TFrfUcs5a+5mW7DRdBQhbGdUWj4vTLpGzhiB+Uqp+02HAJsUEK31cGA1kGM6iylr2ms4a82d7Am1mI4ihG2V+DN5afJnqcgcbDqKSU3AZKWU8W4Ku8zC+j+SuHgsb93FqVW3S/EQ4ghquto4ffU/ebtlh+koJuUCfzcdAmxQQLrPNb/QdA5T3myu5ozV/6Qu3G46ihCO0BDu4Kw1d/Jq0xbTUUyao7W+3HQIo11YWutCYA1QajKHKa81beHCdffJkbNC9EOGx89jE69mdl656Sim7AUmmZyVZboF8nuStHg8Xb+ec9feI8VDiH5qj3Zx0bp/8Uz9etNRTBkEGD18ylgLRGt9BvCyyQymvNK4mTnr7qUzGjYdRQjHS1Fenpw4P1m3PtHA2Uqpl03c3MjDW2udAVQBo03c36S3WrZz9pq7pOUhRBxlePw8P/kaZuaUmY5iwkZiCwwTvt+RqS6sn5KExWNl2x7OX3uvFA8h4qw92sUFa+9N1gW45cDNJm6c8BaI1no68B5JttdVVfs+Tq+6Q2ZbCWGhIn8Gr0+5lskZJaajJFoYmK6UWp3Im5pogfyRJCseGzvqOGv1nVI8hLBYoKuds9bcyebOetNREs0H3Jromya0gGitrwRmJvKeptWF2zl/3T3s62o1HUWIpLAn1MLsNXdR29VmOkqinaG1viiRN0xYF5bWOg1YB5Ql6p6mdUbDnLn6nyxt2W46ihBJ5+SckSya/DnSPD7TURJpC7G1IcFE3CyRLZBvk0TFQ6P5/KbHpHgIYcji5m18euNComjTURJpNPC1RN0sIS0QrfVQYD1JdL75jdUv8Jtdb5qOIUTSu2nYafxs5FmmYyRSCzBeKbXH6hslqgXyC5KoeNyxb5kUDyFs4uc7X+dve98xHSORsokdC245y1sgWuujgXcxv21KQrzetJWz1txJWEdNRxFCdPMrLy9P+VwyLTSMAscrpZZZeZNEPNT/lKD7GLcn1MK8DQ9J8RDCZrp0hCvXP8iuULPpKIniAX6XiJtYRmt9AXCSlfewiy4d4YoPH5QzPYSwqX1drVy+/gFCOmI6SqLM1FrPtvIGlhUQrbUCfmzV9e3m+i1Ps6R5m+kYQojDeLtlB9/c+pzpGIn0s+5nsSWsbIFcBky38Pq2cV/N+9y29z3TMYQQvfCXPW9zV81y0zES5WjgAqsubkll0lp7gPeBaVZc305WtO5mRtU/ZGt2IRwk3ePnrWlfSpaz1auASqVU3AdnrWqBfIokKB5tkRDzNjwkxUMIh+mIdjH3w4doj3aZjpIIU4FLrbhw3AuI1toL/G+8r2tH39j6HB92BEzHEEL0w7qOWr699XnTMRLlx909Q3FlRQtkATDBguvayhN1a7l9n4x7COFkf9v7Dk/VrzMdIxEmEesZiqu4joForf3Etixx9WFRu0PNVKz8M4Eu2Z5dCKcr8mewqvJrDE7JNh3FahuJbbQYtz73eLdAFuDy4qHRfGHT41I8hHCJQFc712x8FO3+TRfLgbnxvGDcCkj3XONvxet6dvWn3W/xfMMG0zGEEHH0UuNG/m/P26ZjJMJ34rkuJJ4tkPOI9bO5VnWwgR9sX2Q6hhDCAt+rfpEt7j/JcCoQt62J41lAXN/6+NKmJ2mNhEzHEEJYoD3axf9sedp0jESI27M6LgVEa10BnB6Pa9nV3TUreKlxo+kYQggLvdCwgX/VrjQdw2pna60r43GheLVAbozTdWwp0NXOd6qTZr64EEnthi3PUuP+89S/EY+LDLiAaK2HAVfEIYttXb/lKZl1JUSSqAu38y33b7g4V2s9fKAXiUcL5AbAH4fr2NKzDR/yUKDKdAwhRAL9q3YlL7q7y9oPXD/QiwxoOpfWOhvYAeQONIgdhXSEqe//iQ2yXYkQSWdCejGrpn8Vv/KajmKVZmCEUqqpvxcYaAvkGlxaPABu3b1UiocQSWp9Ry1/2ePqs9RzgPkDucBAC8jnB/j5tlXT1cbPdrxuOoYQwqAf73jF7eOfXxzIJ/e7gGitTwAqBnJzO/t/216iKdJpOoYQwqDGcCc3b3/ZdAwrTdNaH9vfTx5IC+TaAXyura1s28NdNStMxxBC2MBt+95jVdte0zGs9IX+fmK/CojWOgsXT929YeuzRHTcD+8SQjhQREf5xtZnTcew0rzuCVF91t8WyHzAlXsfP9+wgf80bTUdQwhhI682bWFR4ybTMaySBVzZn0/sbwFxbffVj7a/YjqCEMKGbtr2kpu3fO9XN1afC0j3vldH9edmdvdk/Trebd1pOoYQwoaWte7iOfce5XBC97O9T/rTAvlyPz7H9jRaWh9CiMO6efvLbm6FfK6vn9CnAqK1TiXOJ1rZxSOBNaxs22M6hhDCxla07ubJOteeoX5197HkvdbXFsg5uHDleRTNLTteNR1DCOEA/7v9ZaLubIUUArP68gl9LSD9Gqm3u0cCq6lq32c6hhDCAVa37+OJurWmY1jlqr58cK8LiNY6DZjT5zgO8PvdS0xHEEI4yC93vmE6glUu6X7W90pfWiDnE9t8y1X+07SVd1p2mI4hhHCQ91p3sqR5m+kYVsgBzu7tB/elgLiy++p3uxebjiCEcCAXPzt6/azvVQHRWmcQa4G4yoaOAM/Wf2g6hhDCgZ6sW8f6jlrTMaxwodY6vTcf2NsWyBwgs/957Ol3uxe7dTaFEMJiUTR/2v2W6RhWyAbO7c0H9raAuK77qrarjftqVpqOIYRwsHtqVrj1vJBePfOPWEC01pnAeQOOYzN31SynI9plOoYQwsHao13cXbPcdAwrzOlNN1ZvWiCnA73qD3MKjeaf+1z5ogshEuyOfcvcuL1JJnDqkT6oNwXknIFnsZf/NFXLWedCiLj4sCPAYndO6T3isz8pC8jt+94zHUEI4SK371tmOoIVBlZAtNbjgDFxi2MDdeF2HqtbYzqGEMJFHgmspiHcYTpGvI3XWh/2+X+kFojrWh/31aykMxo2HUMI4SId0S4eqP3AdAwrzD7cXx6pgPRqLrCT/NOdTU0hhGF3uPPZcthGxCELSPcUrplxj2PQqra9rJZdd4UQFljZtoe17TWmY8TbGd3nQPXocC2Q04CMuMcx6OFAlekIQggXW1i32nSEeMsETjnUXx6ugLhu/OPhOikgQgjr/Lt2lekIVjhkLThcATnTgiDGvN+2m40ddaZjCCFcbH1HrRsPpztkLeixgGit84CJlsUx4OGA65qWQggbcmFX+VStdY9HmR+qBXLSYf7OkR6RAiKESIAH3Ted1wsc19NfHK6AuMaK1t1s6pTuKyGE9TZ31vNB2x7TMeJtRk9/eKgC0uMHO9WzDXJolBAicZ5r2GA6Qrz1roBorf0corniVM+778UUQtjYC+575pyotfYd/Ief+AOgEhet/2gId/Bu607TMVzGR15KHqPT8hmeks0gfxYlKRkUetPI8aaS7U0h3ePBp7z4lSKqI3TpCKFomKCOEIwEaQx3UBdupz7cQV1XG/tCjVQHG9gRChIy/c8TYoCWtmynMdxJni/NdJR4yQSmASsO/MOeCoiruq9ebNxIREdNx3AsvzefqdnDOC5rCJUZpUzJLGViWg75Hg8q7nfTRKKd7Ak2sLUzwNq2vaxq30dV+16q2pto1K47c6EPFPnpw5mW4rXg634omtr27azpkp+fvgrrKK80beaywsmmo8TTDJKtgLzQsNF0BEdRnhym55Zzdt4YZuWN5sSMLDIS9shSeD3pDEtPZ1j6EE7Jn9b95xod7WBT23aWNG9nSUs1i5t38WFX2H3H+ByKGsQNE67l5oxETo6MsmPv3YzfvBnX7TObAC80bHBjAfnzgX/QUwE5MTFZrKfRvNQoBeRIlCeX4wumMa9oMhflDWW414rWxUAolCeD8uwJlGdP4BpA08Xetq280PAhzzVsYFFLPU0uriYpWRXMTU/0zHoPQwsrmVW9macjCb61C7zQsBGNRtnsp2kAPjE792MFRGtdDAxNWByLfdC2lz2hFtMxbMpDUeZEPjfoOD5XNJpxPrsVjcNT+BmcOY7PZo7js8M0oXCAN+qreLD2Ax5rCtDoqmLi4+TiqYw28AJ5/BOZn5/OM4GO5GntxcnOUBNr2muYklFqOkq8DNdaFyulavf/wcEtkMoEB7LUG83VpiPYUApj8o/lu0NP4urcPJfMllCk+IqZVXIGs0pO5y+h3TwXWMk9+97nufYOHH/6i3cM8wtz8Rq5eRrnFk+kJLAC123QkQBvNle7qYAATAFe2/8/B7eJp+EiS9x5TnE/+RiZN4O7Kr7Nuknnca1risfBFGkpQ7l0yPk8Mf1GNk65lO8XDaHESc2rj1Hk50/nohRT/wBFVl4ll6Y69gtolAufQR+rEQcXkKkJDGK5pc3bTUewAUVW+hR+PunrrJ18HtdkZeI3HSlBFCmU5R7Nz8dfx+YpJ1HuyGdgBhcWjyPfYALlGcn8ogJDLSBnW+y+AvKxGuHaFsi2YCM7Q02mY5jlyef8EQtYVfkpvp9f4NIWR28oUr1pOHFGvidlMvPzUgyPT/k4tngaEx1ZgM1y4XOo5xZI9ypD1+zA68KmYx8osjOO4rZp1/PU8PGM8shPvjMpRhVVcooNXj9/RgXzMqUN0h8u6wmZorX+6BvhwBbIOHDkm7QeLWlJ1gKSyrTSK3i34lKuzUxz15bKyUYVM7d4GCmmcwCoQj5VMpxDnm0qDsllb2bTgTH7/+fA54truq8A3mreYTpC4nkKuXLMtbw5toIJNnjXKgbGn1nJvMxErjw/HA8jCys5Td6R9NmSFle1QOCAcRBPT3/odCEdYY37TgU7LOUbzo0Tr+X+QYPJMR1GxIGPE4qnMs4e1QMAT8okFuS7ppMiYara9hLSrlqJ2WMBcc2a+3XtNW57wQ7L4y/nt5M/yy/zsnvcWkA4kGcU84vybTbzKYPzi8dTZDqGw4R0hA0dAdMx4mnK/t8cWEDG9PCBjrSqba/pCAnjSRnHHyfP4xtZqTbp6hDxkJNfySXG1n4ciiI3r5KLbZfL/qraXNUjMnr/bw4sICMNBLGECw+175HyjeJnE+dyfabpaZ4ivjI4v3iCLd/pK+9o5hfmyeSMPqpqd9Wb2o8XkO49sLKNxYmzpGiBeAZxw/h53JglxcNtVMokFuTZtUXp5cSSabYam3EClz2TcrXWefDfvbDKzGWJv1XuqvY9yOT8UXP5ZV6Gbd8JaqIEw+3UhDtoCgdp0xG6tMar/KR7/KR7fKR70yjyp5OhXLRf6YApRhRWcrrXrl8RRUpmBXMz3uSHbXJOSG+58Jk0Cnjfd8D/uEKgq93lO/B6KB90BXcPKrLH+gA0oXA9y5u38Xbrbla27WVtRz1bgs3UR3uzf6uP3JRshqbkMDS1gAnpsUOrpmaUMjk9hxxl1wepRVQhVxWPsPd6i+71KT9r2y6nR/bSjmATDeEO8n3ppqPESxkHFJAycznia31H7ZE/yMHSMk/h7rKxhvvHNa2d23gyUMUj9et5pbWRln7v9R2mKdRAU6iBta3bWHTA33i8OUzNLmNmzihOzS3jlKxiij3ubq34Miq4Ossuaz8OxcPookpO3r6dV6UR0msfdgQ4IXu46RjxMgpc2IW1tbPedATreIZxU/npnGioe0MTZHPDCv64+y3ua6yj2eL7RSPNfNC4ig8aV/FnwOPN54T8iVxSMImL80cyxmFnmByZl2OKpzHJAf8ob+ok5ue+wKsN0gbprepgg5sKSBm4sIBUBxtNR7CIj8qhF/DtTL+Bh2aE3c3v8sPq17mnpZWuhN8/JhppYGlgKUsDS/mOyqQyv4JrSo9mXn4pxW7o6ure9dYZa3myuKhkHPkNq2kwHcUhtna66is1Cv47jdc1YyDVQVe9SB/xph/Pn4YOJbE9qJpIeBd/3/g3JlU9wx0Gi8cn6DZW1i/lhnV/Zviyv3Fl9bu83BnCyT0qWbmVXJZq12kRB4udU3Kh3wWFO0Fc9mz6WEcQepQAACAASURBVAEZYTBIXFW7q8p3y+KKEacyI6FdV5q6lqVctvIffKVmD3bekDoY2sXCXU9y1orfcPSHL/Ov1hYHDu6mcU7JREosuLKOdtFhwXWVdwzzC3NsOxPQbqo7XdU7MhLAo7XOAvccFeHGLqz0nFP4cWEip+yG2Vj7OKesfo4ngw7aEka3szLwGgs++B3lq5/kT02Nljw4raD8E1mQn27Ba6zZF1jE71sjFpxp7uOU4inu6b6w2Nagq8Zns7TW6R6w5YLXfonoKDuCdn6v3B85zB12DOUJ6+PvYs3ehzhj43LWObY/qIvtTe/y9dV/ZOKaZ7mzpdXm56IrhhZWMsuSFmYLT9Uu497Abgu6HxUp2ZXMzZA2SG9s62wkakEZN6jIAxSaThEvu0MtdLlsE8WUrBP4VsJWJUfYWvso521Zy05XfJ93sa1xKZ9f9XsqN61ml23/TflcUVxmyfhWJLiOh5uDbKpbzTId/y+AUoOYVzw4aY5JHoiQjrhtjVqhqwpITVer6QhxlsrZg49iQkJaH5qm5le4bFMV2237oO2vIBtaa7BrB4I3YxpXZ1ux9iPKzvoqFkch2rmGhS1WdGN5GFdUyQnSCOmV2q420xHiqdBVXViBcLvpCHGlUqbw5cKshIx9RLvW840Nb/K+Y7utnMpDZXEFFVa8SdCNPB7YThCARh4P7Oj+fXx506YwP0faIL0R6HLVM8pdXVh1rnpxFMMLKzkjITOv2nhi61PcE5TqkXCe4VxdVGTJ2o9IcC0LW/Z36Wp21FexpFfby/RVNpeUlMtBZr1Q5643ue7qwnJXCySfy4tGJOCQek1T4yK+Wdvs6DUUTpWRU8kVlqz9iLIpUMV7B9SLaHAdC5vDFnRjKYryK5njkzUhRxJwVxdWkau6sNzUAvGkTuDiBOyJpPVebq1ewTaL7yN6ksqs4skMseJF1gEerTt45lULTwW2YsVPifKVM78wy2Vby8SftEBszD0vjmJw/gSO8VhePqire4P/a3PXzDWnUL7xLCiwZn1PuGM1Cz+x3bpmb/1qXo9Y0Y3l5/TiKe45lc4ibnqTS3cBKTCdIl7c8+KkcVrecOu7r3Q99+1Zi7v3L7YrRWlhJedY0u0TYXVgNVU91AndtZ6Hm0KWdGOl5lRyVbpMxzoc97zJBboLiGtWoTdHrJhjYoBnGKflWL1poqarbQV3tNh7iZ175XJ58Wgyrbi03svCulp6ble282xgsyU7KSs1hHnFpQ7ZDNKMJrc8o2LSPWCTc4niIBh1x8PQl1HGSZYPSEZ5L1DFetet+XAGb/o05uf4LHiToOlqW82jHYeaEqGpb6hiUdiKF97DpKIKjpGBkEMKRV3VXZzqAXsfftYXIVesQlcUZA5ltOXDH7t5sr5BZl4Z4WFy0TSOtmSBaJRlgTVsOkx90OENPNTYaclr70ubyvwcaYMcSlC7401utxRXtUDcUUA8TM0qtfxFCXds5MVOKR9GqKFcbVFXj47u4OG6+kN0X+3XyUuBDdac46FyuaxkDFlWXNsF3NgCcU0BcUcXVjZTMjItXn0eZW/TVtZJ95URaTmVXJVmxSusCbZU8XjnkV/Y5sYqnuuy4htAUVJg1eQA53NjC0S6sOxEFTDOkofLgSIsb9ljn8OhkkoKZxRPZrglz9cwSwLr2NGbD41s5uGGNku6sTzd05OlhHySO97kfkRaIHajfIWMtfrdmw7wfnvQXRtLO8T+BXeWtD+i1Txc39sdBUK8FljPPgtyQAqziicz1JJrO5sr3uT+l7sG0bu08/v0vSm51qxMPoCOBlgj4x8GKIryp3OeJW8QNG1NVTwV6v3bgram1Tzdh4/vPUV6TiVXpEkb5GBBd42BuGsQ3Q3frp6UHAZZ/A+JhOqplvphQDaXlIyxaNPBfrQoolt5uL75CAPu/aM8w5hfVIzXgms7mTdhB8MlRKoPFxUQn3L+KtgMf6blM1giwcYEHRilGF58IXeVFttscVmQF7c9wC9aEvtu0NO97bkl7Y/IZh5qaO9jt2RszGRn6QmMjHsoL9OKK6jctYjl0lf6kVRlr5+EAUp11b/Gr5z+fkeR602zeAaWJtjVSmJOjldkpA5hZu4wm51Y18E2f6LfCXqYUFTJCZbsb6Zpaqzi+X7MqupsqeKJ4HF83YKJG770aVyd/RrLm50/NhkvKR6nP6M+zgOETIeIF+e3QBQ5PquPr9U0hjss6bYQh2Hp0a+dvNjfdR3RHSysb7Tm+0HlcUXxKPfslRQHLmuBBF1VQJzfAoF0j9V7YEFrRGZgJVpKdiWfsmijwWh4Aw83dPbzNY3wbmANmy35hvAwpLCCs5z/Yxk3qe5qgQQ9YMkpl0ake5xe3RV+j8fyFkgwasWhQuLQ/MwsnkKZJS+spq6+ikUDaEJ0ta7mMYtm5Xn8E2VNyAFSXPAm9wAhV7VAcnzWn99ntUR0w4W1lI+E8o5lQWGORTOSWnkmsJmWgVxC72ZhXQBrRipSmV08kVJLru08qY5/k/sx7mqB5HmdX0CiCXi4O32kyFkUBfmVXGDRoH00tJ6Hmgb6HjDKqsBqi7a2UWTmVnJ5qrRBANJcWEBc1AJx/prIRCyGdP5kAyfJ5KKScvIsuXaU3fVVvBGHb5lw+2oeabdmaoXyjGR+UaGsCQEKfa6aUuCyLiyv0wuIpktHLB6fUGR4U6QVkiCe1MnMz02xZgxAN/NkYBsdcblWLY8E9lq0P5qXo4srmCyNEIr8lhwhZoq7urDyfemmIwxYS8SK40YPpMj2Wj1VWMR4GFM0nZMtOts+ElzLw3E7UTLKh3Wred+iLlRfxjSuzpI2SIELnlEHcFcLpMTv9FMINC3hoOWHPOX6M9yz/YCdqWLmFg+x6Gsdpbq+irfj+M0S6VzDwtaoNW9gVAFXFY/A+aOUA1Pkd1UXVtADuOaU90EuKCBNXR0WzYbZT+FNyabE0nsIAH9mJfMyLHrXret5NLArvu/+dD2PB3Za9I7Sw/DC6ZyR5I2QIp+rurA6PECd6RTxMigl23SEAevqaqbW4olY3pR8i86jEP/l46SSqYy16Osc7lzDwtZ4D3prttat5p2oNd+AnpSJzM9LS+ru00J3tUACHiBgOkW8DEpxegsEol3NFp3R8F9efxHlcmKctbyjWVCYZ9HMoyjrA6tZacFzPhpcy8IWqyZypHN+yUSKLLm2MxS5axZWwFUtkFJ/Flav47ZaJNTANoveAX5EFTPVom01RExuXiUXpVj0vaj38UjdXou6Opt4IrCNTkuurcjOreASq74uDuCGXpID1LmqgPiVl8FOf4Gi9WwIWl1AspmelSNTeS2TwQXF4ym06Opdbat5pN2qqRaaXfVVvGnRmxjlHcWCovyk/N4r9GW4YKnBx9T5cFEBARidVsCuULPpGP2n61nfGUFnWNmW8lCRPYxsGmiy7B4AmprGJXwrmtWPrhwfR5XOYoFVg9AW8qRMZn6eVVOlI6ysW8N6C99j6NB6Hm46j7PyrVi/4uX44mlM2PM6a5NsR51RafmmI8RbnQ8XjYFArIC82VxtOsYAhKhqqyNSMMjCQ5gUWTljOM5TxSJL5wxrGlpX8efW/nxuCvNyzmSB47qMFSOLKjnVa1X3VYA32zSj0qxq38Ssbd5NML/Mgmm3Cn9mBfMy3+AHrcl1LKYLC0jAdS0Q579IUTa27qGZQRRYeBePfyznZ3lZ1Cwng8SVKuJTxcOxrKNClfLNSd/gm1ZdPxG6v0Y/ad3mnkVovVCW6vRn0yfUuWoWFsBoF7xIna3bWWH5QHouFxZa+KBLUr6MCuZleh0+lcNqHsqKKjk1yQZCXFhA3DULC2B8RrHpCAOmu7bxZofVzXsPI4oqOdV5Qww25uW44mlMlOpxRN7ucaJk4vzekU+o9yil2nDRavRJ6SUop7//0wFea2q2/NhZb8oUvlSQ6fSvln14ylhQlC+7zvZKBheUjLe0m9ZuRqe56l/bqpTq2N+I3GY0ShxleVMYkZprOsYARXivYZPlCwohjfOHHMskqSBxkZ1XySWpSdYv02+KPCvXythMusfPWHcVkGr479lC1cZiWGBKhvPPP+tsWc+iLqvnOSpSs07kB4XSChm4dM4tnojzO1ATR3lHs6AwNynWhEzKKMHrrnN4qsGlBWSyCwoIkS08VN9q+c68kMllI07lFOl3GRDln8iC/LSkeBjGj48ZxVMZkwTvXqZlDDIdId62gksLSEWmG16sEK8H1rLL8sVWCn/68fxp2HAct+TCNhTDiio506q1H66lSMmqYG4SbKszJdMFb2o/rhr+W0C2mssRf8dkDTUdIS46mpZzn+WzsQB8TBtyKbfkJvdOqf2mCriqeGTSn3XRL6qUecVD8JvOYbEKaYE4R3l6IXk+F/w4693cuW+7RRvbfZzyFPP18ou4SgaB+8ybPo2rs3xSfPvFw9jiSk5y+bfdVFf0inzMxwqIq1ogCsXRmW5ohWi21CzlMcsH0wEU3tSp3D7hLE6Trd77wMtRxRVMkS9Zv3lTp7Ag171nZJb4Mylx11nocGAXllIqALSYTBNvx2YPMx0hLnR4Pb/Zu5euhNxNkZV1Co9POpOZUkR6xzOc+UWFFu5blgyyuKi4HKdPvj+UE7NHmI4Qb01KqUbgY5NGXLMWBOD4LHcUEIjwwZ7XeSSUqK1LFXnZp/HslAu5LE2mZh1JZu50Lk9zef+L5RSFBZVc4HfnmxYXFpAt+39z4Hf+ZgNBLDMzd5TjD5faT3et5Ye7ttGWsDsqsjKP5aFpn+Xn+XmyX9YhpXF28SRc17ttgPKOZX5BtiunQZ+SW2Y6Qrz1WECqDASxTIEvnUkZJaZjxEmUjXuf59a2sEVHjfZE4fWP4nsTr2fJ2GM51ufGH+2BUf7xLMhPd+VDL/H8nFoyhZGmY8RZqsfHUZlDTMeIt49qhWsLCMBMN1X+6E5+seUdPtSJPYVHqXSOLr2It47+CvcOncA4WevQTTG4oJKzZawoThSp2ZV8ymVrQo7NGkqax3UjZKv2/8bT0x+6xcycUaYjxFVr8yt8ZU/AwBkKCq9vCAvK5rPmmK/yeNnxnJuRbu3AsUonz9ZDMHlcXjJaFl/GkVKDmVds5UFqiTcjx21tKuCAxsaBr9VGoANIT3gci5yWOwqFQiew48daQV7f/ii/yf08N2X6DYzwKHy+Ui4eeiEXDz2PmvatPFf/IS82VbO4ZR87IwNZ9KjITCnhuJxRnJk3jjkFY5jmt++jxJs+jfnZ1p37EelcwZc2r2Cz3b51vWO5ZfypnOyx4l/uYWJxJcft2M1Su/27++kk9w2gt3HAGMhHP6FKqYjWei1wtIlUVij1Z1GZOZj323abjhI/kR38ZMOLHD/1fGYZ7T7xUZJRzjUZ5VwzDLQOUdNZw+r2ABs7G9gRamFfuIOmcJC2aJQwUcCL3+Mj05tKjjedIn8WQ1LzKUsrYEJ6CaNTUhzy7tPD1OIKpiurvv5RNgTe5p7GXYQtukP/Bbi76SRmWHJe+v41IYtY2piYietW8imP63pBgNVKqY/eKR7887oKFxUQgNn55e4qIECo/W0WbBzMkglHMdqyh1jfKJVCafowStOHcabpMFZTw7i6qNi6YqdreSSwx4bFA6CVpwNbaM2fQLYVl1c5XFI8hhsb1zt+YdqJ2SPcsSPGx31sqOPgESvXDaTPzis3HcECmr31T3Nx9WZ3nUfsEOm5lVxl4dqPrvYqHm5PxB5o/aGpbVjFKxGr+pgUxQXTOc8FkxPOyXfjs+fjNeLgnwLXDaTPyBlBrtd17wKALqp2/5vLdu6k2XSUpJLCmcWTGWrZ8y3CysBq1tl4DEB3beChxqBlI4seXznzXXBS5rn540xHsEJyFRC/8jIrb4zpGBbp4I1t93Dprl2Ob+47hfKNZ0FBpmVrP7TexUOBgOXHGQ9MBy/UbqDBsuuncGbJZJy8l8SglGwqMwebjmGFQxcQpVQtsCuhcRLg4sJJpiNYqJ1Xqu/mgh3bqDMdxfUUxQWVnGtZ94om1FLFY502bn50a2ys4nnLNvlUpGVXcpWD14TMzitHOb4N9Qk7lFIfe8z09AotTVCYhJmTP4EUZetFBQPUzn+2382ZW9axPcELDZNLDpcWjyHLsuuHWRJY44xN6SKbeKih3bITM5VnKFcXFePUn1qXjn8sPvgPeiogSxIQJKHyfGmcmuu66XQHCfHBngc4ce0bLOlyz8oXO/GkTWVBjnXnfuhoNf+ua07AMcbxEOLVwDr2WXZ9L1OKKzjKgW/iUz0+zslz5fjHJ2pDUhQQgEtc3Y21X5TdjS8xa9W/+XNLu8370Z3Gw6TiCo61ZAEdgKatqYqnErbr8sC1Na3maQvz+tKmMT/bGSuDDjQ7r9yN03ehlwVkJdBqfZbEuqxwCj7l3D7VvujsXM3XV/+VS3ZuYbd0aR0kQm3bel7v61HB3dtsWHf0aoiXa9dRY9n1LRDdykN1Tda9UVGx7WKcdhTTlUVTTUewQgs9LPP4xBNVKRUG3ktEokQq8WdyRq5bZ2P1INrA09vuZNqqp7izrcMh3SLW0QTZ0LCU69b8gVErH+GuPhaQ1Gxr137o8EYeauhwWNdjmCWBdeywLLRiUEElZztoICTN4+OCggmmY1jhLaXUJ94rHOon4hODJW4wr3ia6QgJpqlrfZfPf/BHTtn8Hu90RRz2gBooTSQc4KW9L3DJ+79h0tpn+VtjQz/OVfFzWskUyizrj9fUN6zi+bDzXp1gSxWPBa17e+Lxj2dBQYZj5jOdlz+eHK8rT9DpcWjjUAXEleMglxZOJt1jXSeEbelWlu59gpNW/IUrt1exKhx1dSHRBNnStJybN97O6Pf+yOzNb/Jke0f/u1q85RYfdtTOc4FNNFl2fQvpnTxcV2/htiupnF08GaesqLjKnd1X0McC8ha4bww225vq1uZlr0TD+3hkx7+ZvvzPXFL9Hq8Hu1xTSDRd7Gxdx1+3PcIZy39F+erHuKVmG9ujA/0Xxo5bnWPhcavR0Hr+3RS07PrWirA8sIaNFnZjZeRWcnma/dsgGR4/5+ePNx3DChHg3Z7+oscCopRqBtZYmciUa0qOMh3BuGi4hid3PcHpy39Nxbpn+EPdbvYN+EGbeDrazvqmD/j1lgc4adnPGfnBv/ifne/zemcwjmM+WVxcXE5u3K53MM2e+lW85uC3a+G2Kh7p66SEPlCe4cwvKrL9mpDLiqaQ6U0xHcMKK5VSPW52cbg5cq8Brhs0mJ1fzojUPLYHG01HMU+3U1X/Ft+sf4vv+oo5tWAylxZOYk7uYIZ57XeivNadVLdV81rjFl5r2sKrLXvZbdmmfjGe1CksyLXw7BXdxBOBajqsun4i6H0sDOzjeyMGWzRLzcv04gqm7nqZlTZ+n3Nt6TGmI1jltUP9xSF/LrTWs4EXLIlj2M3bX+aWHYf8mgiVwcScMZyZW8aM7BGcmF3KCK91hyf1ROsguzv2sKJ1NyvadrO8dTcr2mrZNaBDq/rO4y9hRkamZe9+tW5jXUsNNTZ+MPaG8hVxYmY2lr3/1p1saNnDbpt+ncalF7H+qBvcuH0JwJlKqVd7+ovDFZA0oA7cd2pndbCBMct+h7uHkuPJR2FaCVMzSpmcUUR5WgGj0/IZmZLD4JRMCr2+Pg4wa0KRDgJdbdSG26gJtbAjWM/mzno2d9SxubOeTcFmGh3YrSaS02/KzuHbQ08xHcMKbUChUqrHQbrDlkut9bPAeVakMm32mrt5qXGj6Riu4PWkkudLI8ebSo7XT6ry4lcevGjCOkIwGiGkwwSjYYLREA3hDpqjyb4yRbhFivKy49jvUuJ32pLHXnlKKXXRof7ySPsEvIBLC8j1g0+QAhInkWiQulBQdgMWSemiwoluLR5whGGMI/U8PBvHILZyfsF4xqQVmI4hhHC4L7h38BzgxcP95WELiFJqC7AprnFswoPiusEnmI4hhHCwCenFnJU31nQMq6zvrgGH1JuxT1fOxAL4XMnRZLlz3rYQIgFuHHaKW2deATx/pA/oTQE54kWcKs+XJgsLhRD9Mjglm3lFFaZjWOmIjYfeFJDXgfYBR7Gpbw09OWm2eRdCxM9XB59Iqsd555X0UivwxpE+6IhPTqVUOy4eTC9LzXfr/v1CCItkelP44qBjTcew0tNKqc4jfVBv33o/PMAwtvbdoTPd3I8phIizL5QeQ6HPdWusD/RQbz6otwXkGaC5/1nsbVrmIGbnl5uOIYRwgBTl5YYhJ5mOYaVmjjB9d79eFZDupoxru7EAfjj8DNMRhBAO8LnSoylLzTcdw0pP9Kb7CnrfAgGXd2OdkD2cc/LHmY4hhLCxVI+Pm4adZjqG1Xr9rO9LAXkenHloWm/dMmKWjIUIIQ7pS6XHMjzVutNhbKARWNTbD+51AenejfGp/iRyimOyhnKOjIUIIXqQ5vFx47CZpmNY7TGlVKi3H9zXBRCu7sYC+MXIs/HKuhAhxEGuH3wCQ1NyTMewWq9mX+3X1yflS0BDHz/HUSoyB/Pp4ummYwghbCTbm8qNQ13f+ghwmNMHe9KnAtLdtHmwL5/jRD8dOcutZxsLIfrhpmGnUuzeLdv3+5dSqqsvn9Cfvpp/9ONzHGVISg7fHnKy6RhCCBsYlZbPDUNmmI6RCHf09RP6XECUUquAZX39PKf57rCZbp9tIYTohd+WnUuae/e82m+pUmpNXz+pv6PFt/fz8xwj3ePnxyPONB1DCGHQ6bmjubRwsukYidDn1gf0v4A8ALT083Md4zMlR3F01lDTMYQQBniVhz+McuWJ3gdrARb25xP7VUCUUq0kwZReD4rflp1rOoYQwoBrS4+hInOw6RiJcH/3M73PBrLgwfXdWACn5Y7iuKxhpmMIIRKoxJ/JT0eeZTpGovSr+woGUECUUu8AK/v7+U4RjIZZ31FrOoYQIoFuHT3H7du177dKKbW8v5880CXX/xzg59veS42baI4ETccQQiTIufnj+FTRNNMxEmVAyzIGWkDuIbb5lms9VtfnmW1CCIfK9Kbwl9EXmo6RKA3AvQO5wIAKiFKqBRePhXTpCE/VrzMdQwiRIL8YeTaj0lx91seB/t7fwfP94rFr4K1Ar3dvdJLXm7ZSH+4wHUMIkQDHZw/nukHHm46RKF3AXwd6kQEXEKXULvq4g6NTPCrdV0IkhQyPn7vLL0umnbj/pZTaOdCLxOur9RtAx+lathBFS/eVEEniD6POZ0J6sekYiXRrPC4SlwKilKoCXonHtexicfM29oRcv9heiKR3ceEkvjjoWNMxEul5pdQH8bhQPNtrv4vjtYyT2VdCuN+QlBxuH3OJ6RiJFrdnddwKiFLqBSAuVc00jebxurWmYwghLKRQ3DH2Eor8SbFgcL9VwKvxuli8R4z+GOfrGbGsdRfbg65e3iJE0vvm0Bmcmz/OdIxE+7VSKm7j1fEuIPcBG+J8zYR7JCDdV0K42YnZI/j5yLNNx0i0jcR5xmxcC4hSKgL8LJ7XNOGJeum+EsKtSv1ZLJwwlxTlNR0l0W5WSoXjeUErJj3fDzh2/uuqtr1s6AiYjiGEsIBPeXh4wlyGpuSYjpJoa7DgCI64F5DuVshP4n3dRJHFg0K41+9GncfMnDLTMUy4WSkVjfdFrVp2+TAOnZH1aN1q0xGEEBaYWzyNrw0+0XQME1YAj1txYUsKSHel+7EV17bSho4Aa9prTMcQQsRZZebgZFzvsd/N8Zx5dSArN355AnjPwuvH3SPS+hDCdYak5PDUxAVkelNMRzFhGfCcVRe3rIB0VzxHtUIek8WDQrhKtjeV5yZ9muGpuaajmHKTVa0PsLYFglLqWWCxlfeIl+pgAytad5uOIYSIE6/ycP+4K6nIHGw6iimvKaUWWXmDROxd/DUg7qP/8fZY3Vq0uzYUFiKp/WnUHC4omGA6hilR4DtW38TyAqKUep/Y0be2JpsnCuEe3xt2KtcNTprDoXpyu1JqudU3UVbfAEBrXUpsixNbrt7ZG2ph6Hu/IiotECEc75qSo7iz/FJUYh5vdtQMjFdK7bX6Rgk5fksptQ/4RSLu1R+P1q2R4iGEC1xeOIU7xl6SzMUD4MeJKB6QoALS7ffENvOyHem+EsL5LiyYyAPjr0ymY2l7sgn4S6JulrCvtFIqBHwvUffrrbpwO280V5uOIYQYgFl5Y3ho/KfwJ98GiQe7QSkVTNTNElqqlVKPAZZOK+urJ+rWEta2nyQmhDiEE7NH8PiE+aR5fKajmPZK99KJhDHR1vsOENcthQdCFg8K4Vwzc8p4YfI1ZCXnKvMDdRFbMpFQCS8g3Ye52+LkwqZIJy83bjIdQwjRD2fkjubZSZ8hx5tqOood/FoplfB3w6ZGm34IbDZ07488U/8hIR0xHUMI0UcXFEzg2UmfkZZHzAbgpyZubKSAKKXagWvB7NxZ2bpdCOeZWzyNxyZcLWMeMRr4ilKq08TNjc13U0q9Btxt6v7t0S5eku4rIRzli4OO5V/jrsSX3FN1D3SbUupVUzc3/Sp8G9hn4sbPNXxIWyRk4tZCiD5SKH44/Az+PuYiPMm9SPBAe4DvmwxgtIAopeqBr5u496MBWTwohBOkKC93l1/Gj0acmewrzA/2P0qpBpMBTLdAUEo9BDyZyHsGo2Gea/gwkbcUQvRDvi+dFyZfw6dLppuOYjePKqUsOaa2L4wXkG7XE9sALCEWNW6iOZKwxZpCiH4oS81nybQvcXruaNNR7KYRA2s+emKLAqKU2gl8NVH3k8WDQtjb8dnDebviy0xMLzYdxY7+Rylli9PvbFFAAJRS9wIPWn2fsI7ydMM6q28jhOinBSXTeW3K5yn1Z5mOYkf3KaUeMB1iP9sUkG5fAbZZeYPXmrYQ6Gq38hZCiH5I9fi4bezF3Ft+Oekev+k4drSVWHe/bdhqJY5SqklrPR94HbBkWaaBFQAADqRJREFUW03Zul0I+xmWkssjE+ZyfPZw01HsKgp8VimVsLHi3rBbCwSl1GLgV1ZcO4rmyXrpvhLCTk7LHcWyyuukeBzeLUqp/5gOcTDbFZBuPwTeifdFlzZvZ0+oJd6XFUL0g095uGXELF6e/DkZ7zi894CfmQ7RE1t1Ye2nlAprra8G3gey43XdR2TvKyFsoSw1n3+Nu4IZOSNNR7G7VuBqpVSX6SA9sWsLBKXUZuCGeF1Po3lcpu8KYdyCkumsmv5VKR69c51SypZHgYNNWyD7KaXu1FqfBHx+oNd6r3UX24ONcUglhOiPXG8afxlzIVcXV5iO4hR/V0rdZzrE4di6gHS7HpgGHDuQi0jrQwhzzs8fz9/GXMTw1FzTUZziHeLYA2MV2xcQpVSn1voyYDnQ72Wpj8v0XSESrsCXzi9GzuaLgwb0/i/Z1ACXK6Vsv9+S7QsIgFJqh9b6U8BL9GN9yKq2vXzYEYh/MCHEIV1RNIW/jr6IIn+G6ShOEgau6t7eyfZsO4h+sO5DU37Qn899VFofQiTMqLR8Xpx8DQ+PnyvFo+++q5R63XSI3nJEC+QAvwKOBi7vyydJ95UQ1svw+PnO0FO4cdhMMmQrkv54HPiD6RB94agCopTSWuvPApO6fx3Rxo46qtqNHHooRNKYUzCBP4+eQ1lqvukoTrUeuEYppU0H6QtHFRAApVRr96D6UuCI362yeFAI6xyVNYQ/jjqfU3LKTEdxsjrgQrvtc9UbjisgAEqp9Vrri4BFQOrhPlY2Tzy8VI+PUDSCxlFvfIRhQ1NyuGXkLD5TcpScUT4wIeAKOy8WPBxHFhAApdSbWutrgAeg5+/g6mADy1ttce6KrYxOK2BW3hhm5Y7lnPxyqoON/GbXmzxY+wFhHTUdT9hYkT+Dbw85ha8NOVG2XB84DXxeKfWa6SD95fi3Dlrrm4Ef9/R3v9+9hG9tfS7Biewny5vCabmjuSB/AufklzMiNa/Hj6sONvCHXUu4Y98y2qO23HpHGFLoy+D6wSfwzaEnk+M9bKNf9N73lVK/NB1iIBxfQAC01n8HvnTwn59cdRtLmi09n8qWvMpDZebgj1oZp+aW4Ve9Xz5T29XGX/a8zZ/3vEV9uMPCpMLusr2pXDf4eL4/7FRyvWmm47jJP5VSXzAdYqDcUkD8wLPAWfv/bE+ohWHv/YpokvTtD0/NZXZeOWfnlTMrbwz5vvQBX7MlEuTve9/l1t1L2RVy3PieGIARqXl8fchJfKH0GGlxxN+LwBylVNh0kIFyRQEB0FrnAG8S2zeLv+55h//Z8pTZUBZK9/iZkTOCWbljmZU3hqOyhqAsejmjaF5t3MJt+97lsbq1RGScxLUqMgfzzSEzmFs8rU+tVtFra4AZSqkm00HiwTUFBEBrPRJYDAybtfpOXmnabDpSXE3OKGF2Xjmz88s5JafMyCDmps46/rH3Xe6uWSFny7uEQnFOfjnfGnIyZ+aNMR3HzbYTKx6O2KakN1xVQAC01uW14bbFQ979ZYnTZxT1dvDbhGA0zFP167lt37u80rhFpgE7UKk/i6uKpnLtoGOZklFqOo7b1QCnKqXWmw4ST64rIAAnrvz7zW+1bu9xZpadeZWH47KGMTu/nNl55RybNRSvsv92ZVXt+7inZgUPB6rYEXRFy9y1PChm55fzhdJjuKBggnRTJUYjcLpSaqXpIPHmygLC4pueAc43HaM39g9+z84v58zc+Ax+mxJFs6R5Gw/WruKRutXUdrWZjiS6lacXMq+ogs+VHm2rlmwSaAZmKaXeMx3ECu4rIItvzAZfDWDLOYeJHPw2KaKjvNWyg4WBKh4IfCDjJQaMSM3j4oKJXFE0lRk5I1z5fWZz7cC5Sqk3TAexivu+oxbfNA+433SMA9lh8NukzmiY5xs28EzDep5v2MCeUIvpSK41PDWXK4umcmXRVI7LGmY6TjILARcrpZ43HcRKbiwgjwGXmIxg58FvO1jTXsMz9et5uWkTbzRVE9IR05Eca/+i0Tn547mgYIJrW7QOEwHmKqUWmg5iNXd9py37UQadoVogoafYOHXw2w4awh0satzE8w0beKFxI3uldXJEw1NzOSdvHOfklzMrb6ws9LOXLmCBUuoh00ESwV0FZMn3L0cnpuqX+rOYmVvGnPwJzCmYQIGDB7/tZHeomSXN21ncXM3ytt2827KTriRvoYxOK2BGzkhOzh7JjJyRTMoollaGPYWItTweMx0kUdz1Xbj4pvuBeVZcOt3jZ2ZO2UetjEkZJVbcRhykJRLk3ZadLG3Zzlst23m7ZQcNLt6fq9SfxbTMQRybNYyTckZwUvYIR8/MSyLtwCVKqZdMB0kk9xSQ576aSk52DZATr0tOySjl7LyxzM4vZ2bOKNI8jt393lV2BJtY31HLmvYa1nXUsLY99stJGz9mePxMyihhWuYgpmSUMi1jENMyB1HszzQdTfRdK7EDoRy7LXt/uaeALLnpfDTPDOQSBb50ZuWNjW1KmD+WYSm58UonEmBfVytr22tY117LjlATu0PN7A21xv7b1ZLQqcRZ3hQGp2RTlpof+5WWx6jUgu7/5jMoJTthWYSlGohN1X3HdBAT3POWOqouo+/HCUeOyRoWuaBgfMrZMvjteKX+LEpzszg9d3SPfx+Mhtnb1cquUDM1oVZqw220RkK0RUK0RkMf6xprDHd+tD1LpieFFI8XD4pcX2x5UbrHT5ryketLo9ifSaEvg0J/BoW+dAp9GaRKazUZ7APOVkqt+v/t3WuM3FUdxvHvU9pQBASkyJua0DQxim2hkJhit4CyiARRk6YYRAgxKhcvUaPRV2ZFE0pUQiD4wltICwgUXjRtwsUFEilVIGi5FErAtlSNkFRZmy2VpZ2fL86ftjZlu92dmd/8//N8ksnOzrbNs9m0T885c87JDpKlGSOQR4emM2Psn8CsCfzq1xF/oMVaaK2JgevfT7ka9wOdDWlmDbKNssO8llfRtksz/ps0ffe5vHt57IJ4nNAwtIYZWP5ntO/kP7H8jYgYoNwnMq8Lac2s3p4FLmrSqbqT1YwCUWvpAa9sRgzT0jC7Z9zPx4dGx/3t0raI+BhwN3Bhx3KaWd39HljWlPs8pqr+U1gxNI31Y5tAL9FiDdr9AAM3bJvUHxUxHbgFuLq9Ic2sAX4LXC3p7ewgvaIZI5B/vPxhLlk15d1m1RWT10TEJuBGwCvqZhbAdZKGsoP0mvqPQDokIpYBK+jRU33NrCveAr4k6c7sIL3IBTKOiDgLWA2clJ3FzLru35Td5Y09jn2qPEUzDkl/BJYAL2ZnMbOu2ggscnmMzwVyCJJeAj4KNP5oZjMDyqzD4n7f4zERLpAJkDQKfB74FuW4ZjNrnj3ADyjTVn6b7gR4DeQwRcTZwD3AydlZzKxttlOOYh/ODlInLpBJiIjZlCmtRdlZzGzKngaWSno1O0jdeAprEqojDM4Fbk6OYmZTsxJY4vKYHI9ApigirqTsXj8mOYqZTdwO4OuSVmYHqTMXSBtExCnA7cDi5ChmdmhPApdJeiU7SN15CqsNJG2lTGn9iPJODjPrPXuAG4ABl0d7eATSZhGxiDIamZudxcz2ehW4XNJj2UGaxCOQNpP0J+AMyuKcmeVbBSx0ebSfRyAdFBGXAbcCvlzdrPtGgGsl/S47SFN5BNJBku4APgTcm53FrM+sBea7PDrLI5AuiYiLgV8As7OzmDXYa8A3Jfnsui7wCKRLJK2h3Ll+M9BKjmPWNEFZd5zn8ugej0ASRMQS4JeU6S0zm5q/AldJejg7SL/xCCRB9W6QMyj7RsaS45jV1W7KiP40l0cOj0CSRcQ84CbgvOwsZjXyEPBtSS9kB+lnHoEkk/S8pEHgfMB/GczG9zJwiaQLXB75PALpIRExA7iWMrXlvSNm+4wCPweul/RWdhgrXCA9KCJOBH4IfA04IjmOWaYWcAfwPUmvZ4ex/+cC6WERsZCyPnJ2dhazBI8C35G0ITuIHZzXQHqYpL9IOoeyPvJkdh6zLnkC+IykT7g8eptHIDUSEYPAcuDM7CxmHfAc8GPgXkmRHcYOzQVSMxEh4NPAdcDpyXHM2uEFYAgXR+24QGoqIqYBS4GfAB9MjmM2GVsoI+rfSPJFbDXkAqm5iJgOXAp8F1iQHMdsIjYAPwPucnHUmwukQSJiAPg+cBH+2VrveZxypexaT1U1g/+RaaCIWEDZQ3IFMDM5jvW3MeBu4KeSnssOY+3lAmmwiDgZuAb4BvC+5DjWX3YAt1GK4+/JWaxDXCB9ICKOpYxGvgKclhzHmm0D8CtghaTR7DDWWS6QPhMRZ1LK5HLghOQ41gw7gLuAlZLWZYex7nGB9KmImAlcDHwVGEyOY/X0NOVitDs92uhPLhAjIuYDXwa+iNdKbHzbgduBX0vamB3GcrlAbK+IOAI4C1gGfAGYlZvIesQIsAZYBTwoybdoGuACsXcREUcCn6SUyWeB9+Ymsi57E3gEWAGsdmnYwbhA7JCq9ZLzKWXyOeDY3ETWIbuAhykjjfsk7UzOYz3OBWKHJSKOAhZTFt4H8cnAdbcZGK4e93sx3A6HC8SmJCLmUEYng8AFeKqr170JrKcUxmpJm5LzWI25QKxtqnWTJcCngPOA+fhK3mx7gGco6xkPAI95PcPaxQViHRMRRwMLKVNeA9VHb17srJ2U3eDrKIcXrpP0Rm4kayoXiHVNdfT8AkqRvPOYnRqq/v5GKYr1lNJ41kekW7e4QCxVRBwPzANOBT5CWZQ/HTg6M1cPGgNeoez+3ki5xe8pSa+lprK+5gKxnlPdtjiXcvDjfEqxzAVOAY7PS9YVI5Sb+jYDz1PuCX8G2CyplRnM7EAuEKuViDiBUiRzDvJxDvCepGgTtRPYSimJLfs93wpskTSSFczscLlArFGqfSonVo9ZwEn7fb7/Ywb7RjMzgaOq58cB06qvH1O9Ngq8DbSA/1Sv7QL+Wz0fqb7+r+qx/YDnez+XtKud369Zpv8B3C3m84+7AbQAAAAASUVORK5CYII=" alt="Go Automation" style="height:72px;width:72px;border-radius:50%;object-fit:contain;">
+    <div>
+      <div style="font-family:var(--font-display);font-weight:700;font-size:22px;color:var(--navy);line-height:1.1;">Go Automation</div>
+      <div style="font-size:13px;font-weight:600;color:var(--green);letter-spacing:0.04em;">WhatsApp AI &amp; Human Messaging</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#journeys">AI Journeys</a></li>
+    <li><a href="#compliance">Compliance</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="#consumer-duty">Consumer Duty</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Book a Demo</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#journeys" onclick="closeMenu()">AI Journeys</a>
+  <a href="#compliance" onclick="closeMenu()">Compliance</a>
+  <a href="#security" onclick="closeMenu()">Security</a>
+  <a href="#consumer-duty" onclick="closeMenu()">Consumer Duty</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="#contact" class="nav-cta" onclick="closeMenu()">Book a Demo</a>
+</div>
+
+<!-- WHATSAPP STAT STRIP -->
+<div style="background:var(--green);padding:7px 24px;margin-top:90px;">
+  <div style="max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:24px;white-space:nowrap;flex-wrap:nowrap;">
+    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);"><span>📬</span> 98% open rate vs 20% for email</div>
+    <div style="width:1px;height:14px;background:rgba(11,31,58,0.25);flex-shrink:0;"></div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);"><span>💬</span> 45% response rate vs 6% for email</div>
+    <div style="width:1px;height:14px;background:rgba(11,31,58,0.25);flex-shrink:0;"></div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);"><span>⚡</span> 5× more likely to be read than email</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,196,122,0.12);border:1px solid rgba(0,196,122,0.25);color:var(--green);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:6px 14px;border-radius:var(--radius-pill);margin-bottom:24px;">
+        <span style="width:7px;height:7px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>
+        AI-Powered WhatsApp Journeys for Mortgage Brokers
+      </div>
+      <h1>Your business is full of<br>money you haven't<br>collected yet.<br><em>We help you collect it.</em></h1>
+      <p class="hero-sub">Winning the mortgage is just the beginning. The protection opportunity, the remortgage, the referral, the estate planning and the general insurance — the lifetime value of each client is far greater than the initial case.</p>
+      <p class="hero-sub">Go Automation is a complete WhatsApp communication platform for mortgage brokers — AI-automated journeys and human adviser messaging, all in one place, all fully compliant. Every conversation logged, timestamped, and searchable. Your advisers work from an app, not their personal phones. Nothing falls through the cracks.</p>
+      <p class="hero-sub">From lead follow-up to booking remortgage appointments and protection follow-up, to post-completion Consumer Duty touchpoints — every journey handled automatically through WhatsApp, creating consistency, increased conversions and an improved customer journey. All while creating more time for your team to work on creating more business.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Book a Free Demo →</a>
+        <a href="#journeys" class="btn-secondary">See what's included</a>
+      </div>
+    </div>
+    <div class="hero-visual" style="position:relative;">
+      <div style="position:relative;padding-top:32px;padding-right:16px;">
+        <div class="badge-float">98% open rate ✓</div>
+        <div class="customise-bubble">✏️ Customised for your firm</div>
+        <div class="wa-phone">
+          <div class="wa-header">
+            <div class="wa-avatar">GA</div>
+            <div><div class="wa-hname">Your Mortgage Broker</div><div class="wa-status">AI Assistant · Online</div></div>
+          </div>
+          <div class="wa-body">
+            <div class="wa-bubble received">
+              <div class="wa-tag">Protection Review</div>
+              Hi James 👋 Following up on your recent mortgage — we'd love to make sure your family is properly protected too. Do you have life cover or income protection in place?
+              <div class="wa-time">10:14</div>
+            </div>
+            <div class="wa-bubble sent">We have some old life insurance but not sure if it's enough<div class="wa-time">10:16 <span class="wa-tick">✓✓</span></div></div>
+            <div class="wa-bubble received">
+              <div class="wa-tag">Fact Find</div>
+              That's really common after a new mortgage. A quick review could save you money or give you better cover. Can I ask a few questions to help your adviser prepare?
+              <div class="wa-time">10:16</div>
+            </div>
+            <div class="wa-bubble sent">Yes go ahead<div class="wa-time">10:17 <span class="wa-tick">✓✓</span></div></div>
+            <div class="wa-bubble received">
+              <div class="wa-tag">Appointment Booking</div>
+              Your adviser has time Thursday at 11am or Friday at 2pm — which suits you best?
+              <div class="wa-time">10:18</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHATSAPP STATS -->
+<section class="wa-stats">
+  <div class="container">
+    <div class="section-eyebrow" style="color:var(--green);">Why WhatsApp beats email and text</div>
+    <h2 class="section-title" style="color:white;">While many channels go unread, WhatsApp gets opened.</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.85);margin-bottom:48px;">The reason Go Automation uses WhatsApp isn't just because clients are on it — it's because consistent WhatsApp communication is what actually converts more leads, recovers remortgages, gets protection conversations started, and generates referrals. Email and text simply don't come close.</p>
+    <div class="stats-grid">
+      <div class="stat-cell"><div class="stat-num">98<span class="stat-sup">%</span></div><div class="stat-label">WhatsApp open rate vs 20% for email and 30% for text</div></div>
+      <div class="stat-cell"><div class="stat-num">5<span class="stat-sup">×</span></div><div class="stat-label">More likely to be read than email within the first two hours</div></div>
+      <div class="stat-cell"><div class="stat-num">45<span class="stat-sup">%</span></div><div class="stat-label">Average WhatsApp response rate vs just 6% for email</div></div>
+      <div class="stat-cell"><div class="stat-num">40M<span class="stat-sup">+</span></div><div class="stat-label">UK WhatsApp users — your clients are already there</div></div>
+    </div>
+    <div class="wa-feats">
+      <div class="wa-feat"><div class="wa-feat-icon">💬</div><h4>Clients respond on WhatsApp</h4><p>A remortgage reminder sent by email gets ignored. The same message on WhatsApp gets read and replied to. That's the difference between retaining a client and losing them to their current lender.</p></div>
+      <div class="wa-feat"><div class="wa-feat-icon">⚡</div><h4>Instant, 24/7 engagement</h4><p>Let customers respond at a time that suits them on the communication app they use the most — and when they do, your AI is ready to respond immediately, day or night.</p></div>
+      <div class="wa-feat"><div class="wa-feat-icon">🎯</div><h4>On-brand, on-script, always</h4><p>Every message reflects your firm's tone and compliance requirements — consistently, with no drift, no bad days, and no improvisation. It sounds like your firm, not a chatbot.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFIT CENTRE -->
+<section class="profit">
+  <div class="container">
+    <div class="section-eyebrow" style="color:var(--green);">Where the money is</div>
+    <h2 class="section-title" style="color:white;">Four places your business is leaking income right now.</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.85);margin-bottom:48px;">It's not about working harder. It's about having an intelligent system that consistently captures every opportunity — so nothing slips through the cracks when new business is coming in and there are only so many hours in the day.</p>
+    <div class="profit-grid">
+      <div class="profit-card">
+        <div class="profit-label">Leak 1</div>
+        <h4>Leads going cold before you call back</h4>
+        <p>Very few businesses get maximum conversion from their leads — there is a lot of waste and missed opportunity. Our AI works 24/7 following up leads your team haven't managed to contact, qualifying them, gathering initial information, and booking the appointment directly into your adviser's calendar. And when your team is available, the AI hands over seamlessly so nothing slips through.</p>
+      </div>
+      <div class="profit-card">
+        <div class="profit-label">Leak 2</div>
+        <h4>Protection cases going unwritten</h4>
+        <p>With new mortgage business coming in, protection follow-up gets deprioritised. AI books the appointment and gathers medical information beforehand so advisers walk into every protection meeting prepared to close. Every missed protection case is also a Consumer Duty risk — a consistent AI process ensures no client is ever left without the conversation.</p>
+      </div>
+      <div class="profit-card">
+        <div class="profit-label">Leak 3</div>
+        <h4>Remortgages going to the current lender</h4>
+        <p>84% of clients whose deal ends stay with their current lender — often without calling their broker. Our AI contacts clients 6 months out, educates them on why a full market review matters, and books the appointment timed to the lender's rate release date — so your adviser has something concrete to discuss.</p>
+      </div>
+      <div class="profit-card">
+        <div class="profit-label">Leak 4</div>
+        <h4>References and referrals never being asked for</h4>
+        <p>Most advisers mean to ask for references and referrals but the moment passes. AI requests them automatically at the right emotional point in every client journey — consistently, every time, without the adviser having to remember or feel uncomfortable asking.</p>
+      </div>
+    </div>
+    <div class="profit-also">
+      <p><strong>And there's more.</strong> We also build journeys for general insurance reviews, estate planning conversations, and database reactivation campaigns — turning your back book into an engine for additional revenue streams your advisers don't have time to chase manually.</p>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEYS -->
+<section class="journey" id="journeys">
+  <div class="container">
+    <div class="section-eyebrow">AI Journeys</div>
+    <h2 class="section-title">The complete mortgage client journey — automated and completely customised for your process.</h2>
+    <p class="section-sub">From signed IDD and first enquiry through to completion, post-sale care, and remortgage — every touchpoint handled by AI through WhatsApp. Choose one journey or all of them — the platform works around your priorities.</p>
+    <div class="journey-grid">
+      <div class="journey-card">
+        <div class="journey-icon">🚀</div>
+        <h3>Lead Follow-Up</h3>
+        <p>AI responds to new leads within seconds — 24/7 — qualifying them and keeping interest alive before your competitors can even pick up the phone.</p>
+        <ul><li>Immediate response to every enquiry</li><li>Consistent follow-up for non-contacted leads</li><li>AI qualification against your criteria</li><li>Triage to specific teams</li><li>Booking direct into your calendars</li><li>Smooth handoff to adviser when ready</li><li>Database reactivation for dormant leads</li></ul>
+      </div>
+      <div class="journey-card">
+        <div class="journey-icon">🏡</div>
+        <h3>Intelligent Remortgage Outreach</h3>
+        <p>The system keeps in touch with your customers throughout their fixed rate period, priming them on the importance of not simply switching to their current lender. At 6 months it books them in at the exact point their lender releases their rate options.</p>
+        <ul><li>Consistent touchpoints throughout fixed rate term</li><li>Clients primed not to automatically switch to lender</li><li>Specific rate release date timing per lender</li><li>Priority booking for complex cases and additional needs</li><li>Adviser turns up informed with situation already gathered</li><li>Consumer Duty covered with regular client touchpoints</li></ul>
+      </div>
+      <div class="journey-card">
+        <div class="journey-icon">🛡️</div>
+        <h3>Booked Protection Meetings</h3>
+        <p>Conversational AI gathers everything the adviser needs before the meeting so they walk in prepared to close — with the appointment booked directly into the adviser's calendar.</p>
+        <ul><li>Medical and lifestyle information gathered in advance</li><li>Structured pre-meeting summary for adviser</li><li>Books directly into adviser calendar and video conferencing software</li><li>Clients and advisers notified and entered into reminder sequence</li><li>No-show appointments go into a rebooking sequence</li><li>Consumer Duty protection opt-out recorded</li></ul>
+      </div>
+      <div class="journey-card">
+        <div class="journey-icon">🎉</div>
+        <h3>Client Journey Milestones</h3>
+        <p>Keep clients informed and feeling valued at every stage — from IDD to completion — with timely, on-brand messages that reflect your firm.</p>
+        <ul><li>Automated application journey updates — application submitted, offer, completion</li><li>Completion congratulations and review request</li><li>Every message logged for compliance</li></ul>
+      </div>
+      <div class="journey-card">
+        <div class="journey-icon">💬</div>
+        <h3>Ad-Hoc WhatsApp Messaging</h3>
+        <p>Advisers send individual WhatsApp messages via our app — not their personal phones. Compliant, logged, and part of the client record.</p>
+        <ul><li>Simple app — as easy as personal WhatsApp</li><li>Every message captured and stored</li><li>Adviser notified of every client reply instantly</li><li>Full audit trail maintained automatically</li></ul>
+      </div>
+      <div class="journey-card">
+        <div class="journey-icon">🌿</div>
+        <h3>All Opportunity Follow-Up</h3>
+        <p>Wills, estate planning, and general insurance are often not followed up and maximised. Our AI follows up on these automatically and refers to your team or partners.</p>
+        <ul><li>Booked appointments and information gathering</li><li>Triage to the correct team members or referral partners</li><li>Consistent follow-up so no opportunity is missed</li></ul>
+      </div>
+      <div class="journey-card">
+        <div class="journey-icon">📄</div>
+        <h3>IDD and Initial Compliance</h3>
+        <p>Every client journey begins compliantly — the Initial Disclosure Document is sent, tracked, and digitally signed via WhatsApp before any advice is given.</p>
+        <ul><li>IDD delivered and signed digitally</li><li>Full audit trail from very first contact</li><li>Compliant document handling throughout</li><li>FCA-ready record of client consent</li></ul>
+      </div>
+      <div class="journey-card">
+        <div class="journey-icon">🔁</div>
+        <h3>No-Show Follow-Ups</h3>
+        <p>When a client misses an appointment, AI follows up automatically — re-engaging them sympathetically and rescheduling before the opportunity is lost.</p>
+        <ul><li>Triggered immediately after no-show</li><li>Empathetic, on-brand messaging</li><li>Rebooks without adviser involvement</li><li>Converts missed appointments to pipeline</li></ul>
+      </div>
+      <div class="journey-card">
+        <div class="journey-icon">🌟</div>
+        <h3>Post-Completion and Consumer Duty</h3>
+        <p>Regular WhatsApp touchpoints at least every 6 months across the full mortgage term — evidencing Consumer Duty compliance and creating opportunities for additional business and referrals.</p>
+        <ul><li>Evidences Consumer Duty compliance</li><li>At least every 6 months across full term</li><li>Review and referral requests</li><li>Optional branded newsletter add-on</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="compliance" id="compliance">
+  <div class="compliance-inner">
+    <div>
+      <div class="section-eyebrow">FCA Compliance</div>
+      <h2 class="section-title">Your advisers are messaging clients on personal WhatsApp. That's a compliance risk that needs addressing.</h2>
+      <p style="font-size:16px;color:var(--slate);margin-bottom:32px;line-height:1.7;">For firms with multiple advisers, personal WhatsApp use is one of the most significant unmanaged risks in the business. The FCA requires firms to retain all client communications — and a personal phone is completely invisible to your compliance team. Our platform significantly reduces that risk.</p>
+      <div class="alert-box">
+        <h4>⚠ What happens when a complaint arrives?</h4>
+        <p>The FOS may request a full conversation history. If that conversation happened on a personal phone — and the adviser has since left or wiped their device — that evidence is gone. Your firm carries the liability.</p>
+      </div>
+      <div class="alert-box">
+        <h4>⚠ What if the adviser leaves?</h4>
+        <p>Client relationships built on personal WhatsApp walk out the door with them. Every conversation, every context, every commitment — inaccessible to your business overnight.</p>
+      </div>
+      <div class="alert-box">
+        <h4>⚠ Can you see what's actually being said to clients?</h4>
+        <p>Without a centralised system, you have zero visibility of adviser messaging. That's not just a compliance risk — it's a conduct, quality, and reputational risk too.</p>
+      </div>
+    </div>
+    <div class="compliance-solve">
+      <h3>Go Automation puts every WhatsApp conversation on your platform — not their phones.</h3>
+      <div class="solve-item"><div class="solve-icon">📱</div><div><p><strong>Advisers use an app, not their personal phone.</strong> They send and receive WhatsApp messages through our simple app. As easy as personal WhatsApp — but every message belongs to the business, not the individual.</p></div></div>
+      <div class="solve-item"><div class="solve-icon">📋</div><div><p><strong>Full conversation audit trail.</strong> Every message — AI-generated or sent by an adviser — is logged, timestamped, and searchable. Ready for any FCA or FOS request, immediately.</p></div></div>
+      <div class="solve-item"><div class="solve-icon">🔔</div><div><p><strong>Advisers notified of every response.</strong> Whether a client replies to an AI journey or an ad-hoc message, the adviser is alerted instantly — no hot lead or urgent reply ever missed.</p></div></div>
+      <div class="solve-item"><div class="solve-icon">👁</div><div><p><strong>Management oversight built in.</strong> Review any conversation, spot-check adviser messaging, and ensure your team is on-message and on-brand at all times.</p></div></div>
+      <div class="solve-item"><div class="solve-icon">✅</div><div><p><strong>Digitally signed documents, compliantly.</strong> From IDD at the start of the journey through to documents throughout — send, track, and receive compliant digital signatures all within the platform.</p></div></div>
+      <div class="fca-badge">✓ Significantly reduces compliance risk</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY & GDPR -->
+<section id="security" style="background:var(--navy);padding:100px 24px;">
+  <div class="container">
+    <div class="section-eyebrow" style="color:var(--green);">Security &amp; Data Protection</div>
+    <h2 class="section-title" style="color:white;">Your clients' data is in safe hands.</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.85);margin-bottom:48px;">As a data processor handling personal information on behalf of regulated firms, we operate to the standards your clients and the FCA would expect. Data security and UK GDPR compliance are built into everything we do.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px;">
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
+        <div style="font-size:28px;margin-bottom:14px;">🔒</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">UK GDPR compliant</h4>
+        <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">We operate in full accordance with UK GDPR and the Data Protection Act 2018. Our obligations as a data processor are set out in a Data Processing Agreement provided to every client.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
+        <div style="font-size:28px;margin-bottom:14px;">🛡️</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">Secure infrastructure</h4>
+        <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">All data is stored on secure, encrypted, cloud-hosted infrastructure with role-based access controls, regular security monitoring, and automatic backups.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
+        <div style="font-size:28px;margin-bottom:14px;">🎯</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">Your data, your purpose</h4>
+        <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">Data is processed solely for the purpose of delivering your contracted services and is never used for any other purpose without your explicit instruction. You remain the Data Controller at all times.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
+        <div style="font-size:28px;margin-bottom:14px;">🤖</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">AI processing — transparently</h4>
+        <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">Our platform uses AI services from carefully selected providers including Anthropic (Claude) and OpenAI (ChatGPT). We do not share your clients' personal data with AI service providers, and we never use your data to train public AI models.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
+        <div style="font-size:28px;margin-bottom:14px;">📋</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">Full audit trail</h4>
+        <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">Every WhatsApp conversation is logged, timestamped, and searchable. You always have a complete, evidenced record of all client communications on your platform — ready for any FCA or FOS request.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
+        <div style="font-size:28px;margin-bottom:14px;">🗂️</div>
+        <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">Clean exit, always</h4>
+        <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">On termination of your contract, your data is returned or securely deleted at your instruction. Nothing is retained beyond what is legally required. You can leave cleanly at any time.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,196,122,.1);border:1px solid rgba(0,196,122,.2);color:var(--green);font-size:13px;font-weight:600;padding:10px 20px;border-radius:var(--radius-pill);">✓ UK GDPR compliant</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,196,122,.1);border:1px solid rgba(0,196,122,.2);color:var(--green);font-size:13px;font-weight:600;padding:10px 20px;border-radius:var(--radius-pill);">✓ Data Processing Agreement provided</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,196,122,.1);border:1px solid rgba(0,196,122,.2);color:var(--green);font-size:13px;font-weight:600;padding:10px 20px;border-radius:var(--radius-pill);">✓ You remain Data Controller</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,196,122,.1);border:1px solid rgba(0,196,122,.2);color:var(--green);font-size:13px;font-weight:600;padding:10px 20px;border-radius:var(--radius-pill);">✓ Secure cloud infrastructure</div>
+    </div>
+    <div style="margin-top:32px;text-align:center;">
+      <p style="font-size:14px;color:rgba(255,255,255,.65);">Read our full <a href="privacy-policy.html" target="_blank" style="color:var(--green);text-decoration:none;font-weight:600;">Privacy Policy</a>, <a href="data-processing-agreement.html" target="_blank" style="color:var(--green);text-decoration:none;font-weight:600;">Data Processing Agreement</a> and <a href="cookie-policy.html" target="_blank" style="color:var(--green);text-decoration:none;font-weight:600;">Cookie Policy</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONSUMER DUTY -->
+<section class="consumer-duty" id="consumer-duty">
+  <div class="cd-inner">
+    <div>
+      <div class="cd-badge">🏛 FCA Consumer Duty</div>
+      <div class="section-eyebrow">Post-completion client care</div>
+      <h2 class="section-title">Consumer Duty requires ongoing client contact. Most brokers aren't doing it.</h2>
+      <p style="font-size:16px;color:var(--slate);margin-bottom:20px;line-height:1.7;">The FCA's Consumer Duty regulation, in force since July 2023, requires firms to demonstrate good client outcomes throughout the product lifecycle — not just at point of sale. Staying in touch post-completion isn't optional, it's prescribed. Most brokers are not evidencing this and are technically exposed.</p>
+      <p style="font-size:16px;color:var(--slate);margin-bottom:32px;line-height:1.7;">We build automated WhatsApp touchpoints that contact clients at least every 6 months across their fixed rate period — whether that's 2, 5, or 10 years. Every touchpoint is logged as evidence of Consumer Duty compliance and creates natural opportunities for additional funding, finance requirements, general insurance, estate planning, and referrals.</p>
+      <div style="background:var(--navy);border-radius:var(--radius-lg);padding:28px 32px;">
+        <p style="font-size:14px;color:rgba(255,255,255,.88);line-height:1.7;margin-bottom:12px;">Optional add-on: <span style="color:var(--green);font-weight:600;">branded newsletters, birthday and holiday messages, and market updates</span> delivered via WhatsApp, personalised to your brokerage. Keeps your firm front of mind between mortgage cycles and generates referrals.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.65);">Available as an additional service — ask us about this on your demo call.</p>
+      </div>
+    </div>
+    <div class="cd-touchpoints">
+      <div style="font-size:13px;font-weight:600;color:var(--slate);letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;">Your post-completion journey</div>
+      <div class="cd-touchpoint"><div class="cd-num">1</div><div><h5>Completion congratulations</h5><p>A warm, branded WhatsApp message on completion day. Makes clients feel valued and sets the tone for a long-term relationship.</p></div></div>
+      <div class="cd-touchpoint"><div class="cd-num">2</div><div><h5>Regular check-ins — at least every 6 months</h5><p>Automated touchpoints across the full mortgage term checking everything is going well, surfacing changes in circumstances, and creating natural opportunities for additional funding, GI, estate planning, or referrals.</p></div></div>
+      <div class="cd-touchpoint"><div class="cd-num">3</div><div><h5>Market updates</h5><p>Personalised updates on the mortgage market and how rate changes may affect their current deal — positioning your adviser as a trusted, proactive expert throughout the term.</p></div></div>
+      <div class="cd-touchpoint"><div class="cd-num">4</div><div><h5>Intelligent remortgage outreach</h5><p>Clients with additional needs are contacted and booked 6 months before their rate ends. Straightforward remortgages are contacted at 6 months but booked on the lender release date — so your adviser has the actual rate to reference.</p></div></div>
+      <div class="cd-touchpoint"><div class="cd-num">5</div><div><h5>Review and referral request</h5><p>At the right moment, AI asks happy clients for a Google review and a referral — turning your back book into your best source of new business.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="hiw" style="padding:100px 24px;">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:64px;">
+      <div class="section-eyebrow" style="color:var(--green);">How it works</div>
+      <h2 class="section-title" style="color:white;">Up and running in days, not months.</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,.85);margin:0 auto;">We handle the setup, integrations, and ongoing optimisation. You review and approve — then watch the results come in.</p>
+    </div>
+    <div class="hiw-steps">
+      <div class="hiw-step"><div class="hiw-num">1</div><h4>We learn your business</h4><p>We immerse ourselves in your brand, tone, compliance requirements, and sales objectives before crafting a single message.</p></div>
+      <div class="hiw-step"><div class="hiw-num">2</div><h4>We build your journeys</h4><p>Custom WhatsApp AI journeys built, tested, and refined — with your knowledge base loaded and your firm's voice throughout.</p></div>
+      <div class="hiw-step"><div class="hiw-num">3</div><h4>We connect everything</h4><p>WhatsApp Business account setup, calendar integrations, video meeting links, your CRM — all technical setup handled by us.</p></div>
+      <div class="hiw-step"><div class="hiw-num">4</div><h4>We manage and improve</h4><p>Ongoing monitoring and optimisation. We're a long-term partner committed to improving your results — not a platform you're left to manage alone.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section id="integrations" style="padding:100px 24px;">
+  <div class="container">
+    <div class="section-eyebrow">Integrations</div>
+    <h2 class="section-title">Works alongside your existing systems.</h2>
+    <p class="section-sub">You don't need to change how you work. We integrate with your calendar, CRM, and communication tools — or you can use our mortgage-optimised CRM and calendar system free of charge.</p>
+    <div class="intg-grid">
+      <div class="intg-pill"><div class="intg-icon">📅</div> Microsoft Outlook</div>
+      <div class="intg-pill"><div class="intg-icon">📧</div> Google Gmail</div>
+      <div class="intg-pill"><div class="intg-icon">📹</div> Microsoft Teams</div>
+      <div class="intg-pill"><div class="intg-icon">🎥</div> Zoom</div>
+      <div class="intg-pill"><div class="intg-icon">📞</div> Google Meet</div>
+      <div class="intg-pill"><div class="intg-icon">💬</div> WhatsApp Business</div>
+      <div class="intg-pill"><div class="intg-icon">🏠</div> Your CRM</div>
+      <div class="intg-pill"><div class="intg-icon">🔗</div> Lead Gen Platforms</div>
+    </div>
+    <p style="font-size:14px;color:var(--slate);margin-top:28px;text-align:center;">Don't see your system? We connect to almost anything. <a href="#contact" style="color:var(--green);font-weight:600;">Ask us.</a></p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:var(--offwhite);padding:100px 24px;">
+  <div class="container">
+    <div class="section-eyebrow">What brokers say</div>
+    <h2 class="section-title">Early results from our clients.</h2>
+    <p class="section-sub">We're a growing business and proud of the results we're already seeing. Here's what our clients are telling us.</p>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Very very impressed with our AI Team Member. The speed of response to new leads has completely changed our conversion rate. Leads are being engaged before we've even had a chance to pick up the phone."</p><div class="testi-author"><div class="testi-avatar">DT</div><div><div class="testi-name">Dale Townsend</div></div></div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"We partnered with Go Automation to enhance our lead management strategy, and they truly exceeded expectations. I highly recommend them to any business looking to strengthen their lead generation and implement AI solutions."</p><div class="testi-author"><div class="testi-avatar">KM</div><div><div class="testi-name">Karolina Mallows</div></div></div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Great service and we are working hard together to develop it. Results are improving every day. The ongoing optimisation means it just keeps getting better — it truly feels like a partnership."</p><div class="testi-author"><div class="testi-avatar">GF</div><div><div class="testi-name">Ged Finneran</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div class="section-eyebrow">Pricing</div>
+      <h2 class="section-title">Simple pricing. No long contracts.</h2>
+      <p class="section-sub" style="margin:0 auto;">We're currently waiving our setup fee entirely. Pay your first month and we get straight to work — building your journeys, connecting your systems, and getting you live. We work on a one month's notice rolling contract.</p>
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;max-width:860px;margin:0 auto;border-collapse:collapse;font-family:var(--font-body);">
+        <thead>
+          <tr>
+            <th style="padding:16px 20px;text-align:left;font-size:13px;font-weight:600;color:var(--slate);background:var(--offwhite);border-radius:var(--radius) 0 0 0;">Firm size</th>
+            <th style="padding:16px 20px;text-align:left;font-size:13px;font-weight:600;color:var(--slate);background:var(--offwhite);">Remortgage AI</th>
+            <th style="padding:16px 20px;text-align:left;font-size:13px;font-weight:600;color:white;background:var(--navy);border-radius:0 var(--radius) 0 0;">Full Suite <span style="background:var(--green);color:white;font-size:10px;padding:2px 8px;border-radius:var(--radius-pill);margin-left:6px;">Most popular</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:16px 20px;font-size:14px;color:var(--slate);">Up to 5 advisers</td>
+            <td style="padding:16px 20px;"><span style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy);">£302</span><span style="font-size:12px;color:var(--slate);">/month</span></td>
+            <td style="padding:16px 20px;background:rgba(11,31,58,.03);"><span style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy);">£609</span><span style="font-size:12px;color:var(--slate);">/month</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:16px 20px;font-size:14px;color:var(--slate);">6–10 advisers</td>
+            <td style="padding:16px 20px;"><span style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy);">£505</span><span style="font-size:12px;color:var(--slate);">/month</span></td>
+            <td style="padding:16px 20px;background:rgba(11,31,58,.03);"><span style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy);">£1,014</span><span style="font-size:12px;color:var(--slate);">/month</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:16px 20px;font-size:14px;color:var(--slate);">11–20 advisers</td>
+            <td style="padding:16px 20px;"><span style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy);">£810</span><span style="font-size:12px;color:var(--slate);">/month</span></td>
+            <td style="padding:16px 20px;background:rgba(11,31,58,.03);"><span style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy);">£1,623</span><span style="font-size:12px;color:var(--slate);">/month</span></td>
+          </tr>
+          <tr>
+            <td style="padding:16px 20px;font-size:14px;color:var(--slate);">20+ advisers</td>
+            <td style="padding:16px 20px;font-size:14px;color:var(--slate);font-style:italic;">Talk to us</td>
+            <td style="padding:16px 20px;background:rgba(11,31,58,.03);font-size:14px;color:var(--slate);font-style:italic;">Talk to us</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="text-align:center;margin-top:24px;font-size:13px;color:var(--slate);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.7;">All prices exclude VAT. Setup fee currently waived. Back book onboarding: typical one-off cost from £150, quoted per client depending on data volume. WhatsApp usage above plan allowance passed through at cost. Full suite clients receive our mortgage CRM free of charge. <a href="#contact" style="color:var(--green);font-weight:600;">Talk to us about your specific needs →</a></p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding:100px 24px;">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;">
+      <div class="section-eyebrow">FAQs</div>
+      <h2 class="section-title">Questions brokers ask us.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q" onclick="toggleFaq(this)">What if some of my clients aren't on WhatsApp?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a">With over 40 million WhatsApp users in the UK — around 60% of the entire population — the vast majority of your clients are already there. For the small number who aren't, the system automatically notifies the adviser so they can follow up directly by phone or email. No client falls through the cracks.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Do my advisers need to use your CRM?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a">No. We integrate with your existing CRM and tools. Our AI journeys work alongside whatever you're already using. That said, if you take the full suite of AI journeys, you can use our mortgage-optimised CRM free of charge.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How does this address FCA compliance and Consumer Duty?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Every WhatsApp message — AI-generated or sent by an adviser via the app — is captured, timestamped, and stored centrally. You always have a full, searchable conversation history. For Consumer Duty, our post-completion touchpoint journeys running at least every 6 months across the full fixed rate term create an evidenced record of ongoing client engagement. If the FCA or FOS requests records, you can produce them immediately.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Why can't advisers just use their personal WhatsApp?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a">For any firm with multiple advisers this creates serious compliance exposure. If a complaint arrives and the FOS requests a full conversation history — and it's on a personal phone that's been wiped or belongs to someone who's left — that evidence is gone and your firm is liable. Our platform significantly reduces that risk, and advisers find the app just as easy to use as their personal phone.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How does the remortgage booking work?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a">The system contacts clients throughout their fixed rate term to educate them on the importance of not switching to their current lender without a full review. At 6 months before their deal ends, the AI initiates appointment booking timed to the lender's rate release date — so your adviser has the actual rate to reference. Clients with additional needs or complex circumstances are booked as a priority at the 6-month point. Every appointment is productive and relevant, with updated information on the client's circumstances provided to the adviser before the meeting.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How is the AI customised to sound like our firm?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Our team spends time understanding your brand voice, your clients, and your compliance requirements before writing a single message. Your knowledge base — your services, your team, your products — is loaded into the AI. Every journey is tested and refined before going live. Clients receiving messages will feel like they're talking to your firm, not a generic chatbot.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How does appointment booking work with our calendar?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a">We integrate directly with Outlook and Google calendars. The AI sees live adviser availability, offers suitable slots to clients over WhatsApp, and pushes confirmed bookings into the calendar — including Zoom, Google Meet, or Teams meeting links. Your advisers never need to get involved until the appointment itself.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What happens if we want to add or change a journey later?<span class="faq-chevron">▾</span></button>
+        <div class="faq-a">Changes and additions after go-live are quoted separately depending on the scope of work involved. Minor tweaks are straightforward; new journeys require build time and are priced accordingly. This keeps your monthly fee predictable and ensures any additions are properly scoped and delivered.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Ready to start collecting the income already sitting in your business?</h2>
+    <p>Book a free 15-minute conversation to see if we're a good fit for each other. No commitment, no pressure.</p>
+    <a href="#contact" class="btn-primary" style="font-size:18px;padding:18px 40px;">Book a Free Chat →</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-eyebrow">Get in touch</div>
+      <h3 style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--navy);margin-bottom:16px;">Let's talk about your brokerage.</h3>
+      <p style="font-size:16px;color:var(--slate);margin-bottom:32px;line-height:1.7;">Tell us about your firm and what you're trying to achieve. We'll have a quick 15-minute chat to see if we're the right fit — no commitment required.</p>
+      <div class="contact-detail"><div class="contact-detail-icon">✉️</div><div class="contact-detail-text"><strong>Email us</strong>hello@goautomation.ai</div></div>
+      <div class="contact-detail"><div class="contact-detail-icon">📅</div><div class="contact-detail-text"><strong>Book a 15-minute chat</strong>Choose a time that suits you — we'll send a calendar invite with a video meeting link</div></div>
+      <div style="margin-top:32px;padding:24px;background:var(--navy);border-radius:var(--radius-lg);">
+        <p style="font-size:14px;color:rgba(255,255,255,.88);line-height:1.7;"><span style="color:var(--green);font-weight:600;">No pressure.</span> A 15-minute call is all it takes to know whether this is right for your firm. If it is, we'll take it from there. If it isn't, we'll tell you honestly.</p>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3 style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy);margin-bottom:28px;">Book a free 15-minute chat</h3>
+      <div class="form-row">
+        <div class="form-group"><label>First name</label><input type="text" placeholder="Sarah"></div>
+        <div class="form-group"><label>Last name</label><input type="text" placeholder="Thompson"></div>
+      </div>
+      <div class="form-group"><label>Brokerage name</label><input type="text" placeholder="Thompson Mortgages"></div>
+      <div class="form-group"><label>Number of advisers</label>
+        <select><option value="">Select</option><option>3–5 advisers</option><option>6–10 advisers</option><option>11–20 advisers</option><option>20+ advisers</option></select>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="sarah@thompsonmortgages.co.uk"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder="07700 900000"></div>
+      <div class="form-group"><label>What are you most interested in?</label>
+        <select><option value="">Select an option</option><option>Lead follow-up and conversion</option><option>WhatsApp compliance solution</option><option>Protection fact find automation</option><option>Intelligent remortgage outreach</option><option>Consumer Duty post-completion journeys</option><option>Full suite</option></select>
+      </div>
+      <div class="form-group"><label>Anything else you'd like us to know?</label><textarea placeholder="Tell us about your current setup, your biggest challenges, or anything that would help us prepare..."></textarea></div>
+      <div class="form-consent"><input type="checkbox" id="consent"><label for="consent">I agree to receive communication from Go Automation via email, phone, or WhatsApp in relation to my enquiry.</label></div>
+      <button type="button" class="btn-submit">Book My 15-Minute Chat →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+          <img src="data:image/png;base64,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" alt="Go Automation" style="height:40px;width:40px;border-radius:50%;object-fit:contain;">
+          <div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:19px;color:white;line-height:1.1;">Go Automation</div>
+            <div style="font-size:13px;font-weight:600;color:var(--green);letter-spacing:0.04em;">WhatsApp AI &amp; Human Messaging</div>
+          </div>
+        </a>
+        <p>AI-powered WhatsApp journeys for mortgage brokers. Collect the income already in your business — and significantly reduce your firm's compliance risk.</p>
+        <div class="footer-contact">✉ hello@goautomation.ai</div>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <a href="#journeys">Lead Follow-Up AI</a>
+        <a href="#journeys">WhatsApp Journeys</a>
+        <a href="#journeys">Protection Fact Find</a>
+        <a href="#journeys">Remortgage Outreach</a>
+        <a href="#consumer-duty">Consumer Duty Care</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#">About Us</a>
+        <a href="#">Case Studies</a>
+        <a href="#">Blog</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+        <a href="terms.html" target="_blank">Terms &amp; Conditions</a>
+        <a href="cookie-policy.html" target="_blank">Cookie Policy</a>
+        <a href="data-processing-agreement.html" target="_blank">Data Processing Agreement</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Go Automation AI Ltd. All rights reserved. All prices exclude VAT.</p>
+      <div class="footer-legal">
+        <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+        <a href="terms.html" target="_blank">Terms &amp; Conditions</a>
+        <a href="cookie-policy.html" target="_blank">Cookie Policy</a>
+        <a href="data-processing-agreement.html" target="_blank">Data Processing Agreement</a>
+      </div>
+    </div>
+    <div class="footer-reg">
+      Go Automation AI Ltd &mdash; Registered in England and Wales &mdash; Company No. 14400611 &mdash; VAT No. GB485558833 &mdash; Registered office: Suite A4, Skylon Court, Coldnose Road, Rotherwas, Hereford, England, HR2 6JS
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+  function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
+  function toggleFaq(btn){btn.parentElement.classList.toggle('open');}
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=this.getAttribute('href').slice(1);if(!id)return;
+      var t=document.getElementById(id);if(!t)return;
+      e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-130,behavior:'smooth'});
+    });
+  });
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});
+  },{threshold:0.1});
+  document.querySelectorAll('.journey-card,.testi-card,.wa-feat,.hiw-step,.intg-pill,.profit-card,.cd-touchpoint').forEach(function(el){
+    el.style.opacity='0';el.style.transform='translateY(20px)';
+    el.style.transition='opacity 0.5s ease,transform 0.5s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
