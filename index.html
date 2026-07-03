@@ -257,6 +257,7 @@
     .pricing-card.featured{transform:none;}
     .footer-top{grid-template-columns:1fr 1fr;}
   }
+  @media(min-width:641px){.stat-divider{display:block!important;}}
   @media(max-width:640px){
     nav{padding:0 16px;}
     .nav-links{display:none;}
@@ -305,13 +306,13 @@
 </div>
 
 <!-- WHATSAPP STAT STRIP -->
-<div style="background:var(--green);padding:7px 24px;margin-top:90px;">
-  <div style="max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:24px;white-space:nowrap;flex-wrap:nowrap;">
-    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);"><span>📬</span> 98% open rate vs 20% for email</div>
-    <div style="width:1px;height:14px;background:rgba(11,31,58,0.25);flex-shrink:0;"></div>
-    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);"><span>💬</span> 45% response rate vs 6% for email</div>
-    <div style="width:1px;height:14px;background:rgba(11,31,58,0.25);flex-shrink:0;"></div>
-    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);"><span>⚡</span> 5× more likely to be read than email</div>
+<div style="background:var(--green);padding:7px 24px;margin-top:90px;" id="stat-strip">
+  <div style="max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap;"><span>📬</span> 98% open rate vs 20% for email</div>
+    <div style="width:1px;height:14px;background:rgba(11,31,58,0.25);flex-shrink:0;display:none;" class="stat-divider"></div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap;"><span>💬</span> 45% response rate vs 6% for email</div>
+    <div style="width:1px;height:14px;background:rgba(11,31,58,0.25);flex-shrink:0;display:none;" class="stat-divider"></div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap;"><span>⚡</span> 5× more likely to be read than email</div>
   </div>
 </div>
 
@@ -338,7 +339,7 @@
         <div class="customise-bubble">✏️ Customised for your firm</div>
         <div class="wa-phone">
           <div class="wa-header">
-            <div class="wa-avatar">GA</div>
+            <div class="wa-avatar" style="border-radius:50%;background:#00C47A;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:white;flex-shrink:0;">GA</div>
             <div><div class="wa-hname">Your Mortgage Broker</div><div class="wa-status">AI Assistant · Online</div></div>
           </div>
           <div class="wa-body">
@@ -379,9 +380,9 @@
       <div class="stat-cell"><div class="stat-num">40M<span class="stat-sup">+</span></div><div class="stat-label">UK WhatsApp users — your clients are already there</div></div>
     </div>
     <div class="wa-feats">
-      <div class="wa-feat"><div class="wa-feat-icon">💬</div><h4>Clients respond on WhatsApp</h4><p>A remortgage reminder sent by email gets ignored. The same message on WhatsApp gets read and replied to. That's the difference between retaining a client and losing them to their current lender.</p></div>
-      <div class="wa-feat"><div class="wa-feat-icon">⚡</div><h4>Instant, 24/7 engagement</h4><p>Let customers respond at a time that suits them on the communication app they use the most — and when they do, your AI is ready to respond immediately, day or night.</p></div>
-      <div class="wa-feat"><div class="wa-feat-icon">🎯</div><h4>On-brand, on-script, always</h4><p>Every message reflects your firm's tone and compliance requirements — consistently, with no drift, no bad days, and no improvisation. It sounds like your firm, not a chatbot.</p></div>
+      <div class="wa-feat"><div class="wa-feat-icon" style="font-size:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 10 10 L 42 10 L 42 36 L 10 36 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 18 22 L 24 28 L 34 18" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>Clients respond on WhatsApp</h4><p>A remortgage reminder sent by email gets ignored. The same message on WhatsApp gets read and replied to. That's the difference between retaining a client and losing them to their current lender.</p></div>
+      <div class="wa-feat"><div class="wa-feat-icon" style="font-size:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" style="display:block;"><rect width="36" height="36" rx="8" fill="#E6FBF2"/><path d="M 18 5 L 18 5" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="18" r="12" fill="none" stroke="#00C47A" stroke-width="2"/><path d="M 18 12 L 18 18 L 23 21" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>Instant, 24/7 engagement</h4><p>Let customers respond at a time that suits them on the communication app they use the most — and when they do, your AI is ready to respond immediately, day or night.</p></div>
+      <div class="wa-feat"><div class="wa-feat-icon" style="font-size:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" style="display:block;"><rect width="36" height="36" rx="8" fill="#E6FBF2"/><path d="M 8 8 L 28 8 L 28 22 L 8 22 Z" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M 12 15 L 16 19 L 24 11" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>On-brand, on-script, always</h4><p>Every message reflects your firm's tone and compliance requirements — consistently, with no drift, no bad days, and no improvisation. It sounds like your firm, not a chatbot.</p></div>
     </div>
   </div>
 </section>
@@ -428,55 +429,55 @@
     <p class="section-sub">From signed IDD and first enquiry through to completion, post-sale care, and remortgage — every touchpoint handled by AI through WhatsApp. Choose one journey or all of them — the platform works around your priorities.</p>
     <div class="journey-grid">
       <div class="journey-card">
-        <div class="journey-icon">🚀</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 26 8 L 30 20 L 44 20 L 33 28 L 37 42 L 26 34 L 15 42 L 19 28 L 8 20 L 22 20 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Lead Follow-Up</h3>
         <p>AI responds to new leads within seconds — 24/7 — qualifying them and keeping interest alive before your competitors can even pick up the phone.</p>
         <ul><li>Immediate response to every enquiry</li><li>Consistent follow-up for non-contacted leads</li><li>AI qualification against your criteria</li><li>Triage to specific teams</li><li>Booking direct into your calendars</li><li>Smooth handoff to adviser when ready</li><li>Database reactivation for dormant leads</li></ul>
       </div>
       <div class="journey-card">
-        <div class="journey-icon">🏡</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 8 26 L 26 10 L 44 26" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 14 22 L 14 44 L 38 44 L 38 22" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 20 44 L 20 32 L 32 32 L 32 44" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 36 14 Q 46 18 46 28 Q 46 36 40 40" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 40 34 L 40 40 L 46 40" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Intelligent Remortgage Outreach</h3>
         <p>The system keeps in touch with your customers throughout their fixed rate period, priming them on the importance of not simply switching to their current lender. At 6 months it books them in at the exact point their lender releases their rate options.</p>
         <ul><li>Consistent touchpoints throughout fixed rate term</li><li>Clients primed not to automatically switch to lender</li><li>Specific rate release date timing per lender</li><li>Priority booking for complex cases and additional needs</li><li>Adviser turns up informed with situation already gathered</li><li>Consumer Duty covered with regular client touchpoints</li></ul>
       </div>
       <div class="journey-card">
-        <div class="journey-icon">🛡️</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 26 8 L 44 16 L 44 30 Q 44 42 26 48 Q 8 42 8 30 L 8 16 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 17 28 L 24 35 L 35 22" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Booked Protection Meetings</h3>
         <p>Conversational AI gathers everything the adviser needs before the meeting so they walk in prepared to close — with the appointment booked directly into the adviser's calendar.</p>
         <ul><li>Medical and lifestyle information gathered in advance</li><li>Structured pre-meeting summary for adviser</li><li>Books directly into adviser calendar and video conferencing software</li><li>Clients and advisers notified and entered into reminder sequence</li><li>No-show appointments go into a rebooking sequence</li><li>Consumer Duty protection opt-out recorded</li></ul>
       </div>
       <div class="journey-card">
-        <div class="journey-icon">🎉</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 14 44 L 14 10" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 14 10 L 38 18 L 14 26" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="38" r="3" fill="#00C47A"/><circle cx="34" cy="42" r="3" fill="#00C47A"/><circle cx="20" cy="42" r="3" fill="#00C47A"/></svg></div>
         <h3>Client Journey Milestones</h3>
         <p>Keep clients informed and feeling valued at every stage — from IDD to completion — with timely, on-brand messages that reflect your firm.</p>
         <ul><li>Automated application journey updates — application submitted, offer, completion</li><li>Completion congratulations and review request</li><li>Every message logged for compliance</li></ul>
       </div>
       <div class="journey-card">
-        <div class="journey-icon">💬</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 8 8 L 34 8 Q 39 8 39 13 L 39 27 Q 39 32 34 32 L 20 32 L 12 38 L 12 32 Q 8 32 8 27 L 8 13 Q 8 8 13 8 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 18 20 L 44 20 Q 48 20 48 24 L 48 36 Q 48 40 44 40 L 36 40 L 40 46 L 40 40 Q 36 40 36 36 L 30 36" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Ad-Hoc WhatsApp Messaging</h3>
         <p>Advisers send individual WhatsApp messages via our app — not their personal phones. Compliant, logged, and part of the client record.</p>
         <ul><li>Simple app — as easy as personal WhatsApp</li><li>Every message captured and stored</li><li>Adviser notified of every client reply instantly</li><li>Full audit trail maintained automatically</li></ul>
       </div>
       <div class="journey-card">
-        <div class="journey-icon">🌿</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 26 44 L 26 22" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 26 22 Q 26 10 16 10" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 26 22 Q 26 10 36 10" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 26 32 Q 26 22 18 18" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 26 32 Q 26 22 34 18" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="16" y1="44" x2="36" y2="44" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         <h3>All Opportunity Follow-Up</h3>
         <p>Wills, estate planning, and general insurance are often not followed up and maximised. Our AI follows up on these automatically and refers to your team or partners.</p>
         <ul><li>Booked appointments and information gathering</li><li>Triage to the correct team members or referral partners</li><li>Consistent follow-up so no opportunity is missed</li></ul>
       </div>
       <div class="journey-card">
-        <div class="journey-icon">📄</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 12 6 L 36 6 L 44 14 L 44 48 L 12 48 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 36 6 L 36 14 L 44 14" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="18" y1="22" x2="38" y2="22" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="30" x2="38" y2="30" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><path d="M 18 38 Q 22 34 26 38 Q 30 42 34 36" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>IDD and Initial Compliance</h3>
         <p>Every client journey begins compliantly — the Initial Disclosure Document is sent, tracked, and digitally signed via WhatsApp before any advice is given.</p>
         <ul><li>IDD delivered and signed digitally</li><li>Full audit trail from very first contact</li><li>Compliant document handling throughout</li><li>FCA-ready record of client consent</li></ul>
       </div>
       <div class="journey-card">
-        <div class="journey-icon">🔁</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><rect x="8" y="14" width="36" height="32" rx="3" fill="none" stroke="#00C47A" stroke-width="2.5"/><line x1="8" y1="24" x2="44" y2="24" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="8" x2="18" y2="20" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="34" y1="8" x2="34" y2="20" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><path d="M 38 34 Q 46 34 46 42 Q 46 48 40 49" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 38 46 L 40 49 L 37 52" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>No-Show Follow-Ups</h3>
         <p>When a client misses an appointment, AI follows up automatically — re-engaging them sympathetically and rescheduling before the opportunity is lost.</p>
         <ul><li>Triggered immediately after no-show</li><li>Empathetic, on-brand messaging</li><li>Rebooks without adviser involvement</li><li>Converts missed appointments to pipeline</li></ul>
       </div>
       <div class="journey-card">
-        <div class="journey-icon">🌟</div>
+        <div class="journey-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 26 8 L 30 20 L 44 20 L 33 28 L 37 42 L 26 34 L 15 42 L 19 28 L 8 20 L 22 20 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h3>Post-Completion and Consumer Duty</h3>
         <p>Regular WhatsApp touchpoints at least every 6 months across the full mortgage term — evidencing Consumer Duty compliance and creating opportunities for additional business and referrals.</p>
         <ul><li>Evidences Consumer Duty compliance</li><li>At least every 6 months across full term</li><li>Review and referral requests</li><li>Optional branded newsletter add-on</li></ul>
@@ -507,11 +508,11 @@
     </div>
     <div class="compliance-solve">
       <h3>Go Automation puts every WhatsApp conversation on your platform — not their phones.</h3>
-      <div class="solve-item"><div class="solve-icon">📱</div><div><p><strong>Advisers use an app, not their personal phone.</strong> They send and receive WhatsApp messages through our simple app. As easy as personal WhatsApp — but every message belongs to the business, not the individual.</p></div></div>
-      <div class="solve-item"><div class="solve-icon">📋</div><div><p><strong>Full conversation audit trail.</strong> Every message — AI-generated or sent by an adviser — is logged, timestamped, and searchable. Ready for any FCA or FOS request, immediately.</p></div></div>
-      <div class="solve-item"><div class="solve-icon">🔔</div><div><p><strong>Advisers notified of every response.</strong> Whether a client replies to an AI journey or an ad-hoc message, the adviser is alerted instantly — no hot lead or urgent reply ever missed.</p></div></div>
-      <div class="solve-item"><div class="solve-icon">👁</div><div><p><strong>Management oversight built in.</strong> Review any conversation, spot-check adviser messaging, and ensure your team is on-message and on-brand at all times.</p></div></div>
-      <div class="solve-item"><div class="solve-icon">✅</div><div><p><strong>Digitally signed documents, compliantly.</strong> From IDD at the start of the journey through to documents throughout — send, track, and receive compliant digital signatures all within the platform.</p></div></div>
+      <div class="solve-item"><div class="solve-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 12 6 L 36 6 L 44 14 L 44 48 L 12 48 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 36 6 L 36 14 L 44 14" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="18" y1="22" x2="38" y2="22" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="30" x2="38" y2="30" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><path d="M 18 38 L 24 44 L 34 32" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><p><strong>Advisers use an app, not their personal phone.</strong> They send and receive WhatsApp messages through our simple app. As easy as personal WhatsApp — but every message belongs to the business, not the individual.</p></div></div>
+      <div class="solve-item"><div class="solve-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" style="display:block;"><rect width="36" height="36" rx="8" fill="#0B1F3A"/><path d="M 7 8 L 29 8 L 29 28 L 7 28 Z" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="11" y1="14" x2="25" y2="14" stroke="#00C47A" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="18" x2="25" y2="18" stroke="#00C47A" stroke-width="2" stroke-linecap="round"/><path d="M 11 22 L 16 26 L 25 20" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><p><strong>Full conversation audit trail.</strong> Every message — AI-generated or sent by an adviser — is logged, timestamped, and searchable. Ready for any FCA or FOS request, immediately.</p></div></div>
+      <div class="solve-item"><div class="solve-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" style="display:block;"><rect width="36" height="36" rx="8" fill="#0B1F3A"/><circle cx="18" cy="14" r="7" fill="none" stroke="#00C47A" stroke-width="2"/><path d="M 8 30 Q 8 22 18 22 Q 28 22 28 30" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M 26 10 Q 30 10 30 14 Q 30 18 27 19" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="28" y1="8" x2="28" y2="8" stroke="#00C47A" stroke-width="2" stroke-linecap="round"/></svg></div><div><p><strong>Advisers notified of every response.</strong> Whether a client replies to an AI journey or an ad-hoc message, the adviser is alerted instantly — no hot lead or urgent reply ever missed.</p></div></div>
+      <div class="solve-item"><div class="solve-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" style="display:block;"><rect width="36" height="36" rx="8" fill="#0B1F3A"/><path d="M 7 10 L 29 10 Q 32 10 32 13 L 32 24 Q 32 27 29 27 L 18 27 L 12 32 L 12 27 Q 7 27 7 24 L 7 13 Q 7 10 10 10 Z" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="13" y1="17" x2="27" y2="17" stroke="#00C47A" stroke-width="2" stroke-linecap="round"/><line x1="13" y1="21" x2="22" y2="21" stroke="#00C47A" stroke-width="2" stroke-linecap="round"/></svg></div><div><p><strong>Management oversight built in.</strong> Review any conversation, spot-check adviser messaging, and ensure your team is on-message and on-brand at all times.</p></div></div>
+      <div class="solve-item"><div class="solve-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" style="display:block;"><rect width="36" height="36" rx="8" fill="#0B1F3A"/><path d="M 10 8 L 26 8 L 30 12 L 30 30 L 10 30 Z" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M 26 8 L 26 12 L 30 12" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="14" y1="16" x2="26" y2="16" stroke="#00C47A" stroke-width="2" stroke-linecap="round"/><line x1="14" y1="20" x2="26" y2="20" stroke="#00C47A" stroke-width="2" stroke-linecap="round"/><path d="M 14 24 L 18 28 L 24 22" fill="none" stroke="#00C47A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><p><strong>Digitally signed documents, compliantly.</strong> From IDD at the start of the journey through to documents throughout — send, track, and receive compliant digital signatures all within the platform.</p></div></div>
       <div class="fca-badge">✓ Significantly reduces compliance risk</div>
     </div>
   </div>
@@ -525,32 +526,32 @@
     <p class="section-sub" style="color:rgba(255,255,255,.85);margin-bottom:48px;">As a data processor handling personal information on behalf of regulated firms, we operate to the standards your clients and the FCA would expect. Data security and UK GDPR compliance are built into everything we do.</p>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px;">
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
-        <div style="font-size:28px;margin-bottom:14px;">🔒</div>
+        <div style="margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 12 8 L 40 8 L 40 36 L 28 36 L 22 44 L 22 36 L 12 36 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="20" y1="18" x2="32" y2="18" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="24" x2="32" y2="24" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="30" x2="28" y2="30" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">UK GDPR compliant</h4>
         <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">We operate in full accordance with UK GDPR and the Data Protection Act 2018. Our obligations as a data processor are set out in a Data Processing Agreement provided to every client.</p>
       </div>
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
-        <div style="font-size:28px;margin-bottom:14px;">🛡️</div>
+        <div style="margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 26 8 L 44 16 L 44 30 Q 44 42 26 48 Q 8 42 8 30 L 8 16 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 17 28 L 24 35 L 35 22" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">Secure infrastructure</h4>
         <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">All data is stored on secure, encrypted, cloud-hosted infrastructure with role-based access controls, regular security monitoring, and automatic backups.</p>
       </div>
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
-        <div style="font-size:28px;margin-bottom:14px;">🎯</div>
+        <div style="margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><circle cx="26" cy="26" r="16" fill="none" stroke="#00C47A" stroke-width="2.5"/><path d="M 26 10 L 26 8" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 34 14 L 36 12" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 40 22 L 42 20" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 18 14 L 16 12" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 12 22 L 10 20" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 20 26 L 26 20 L 32 26 L 26 32 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">Your data, your purpose</h4>
         <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">Data is processed solely for the purpose of delivering your contracted services and is never used for any other purpose without your explicit instruction. You remain the Data Controller at all times.</p>
       </div>
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
-        <div style="font-size:28px;margin-bottom:14px;">🤖</div>
+        <div style="margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><rect x="10" y="14" width="32" height="26" rx="4" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 18 14 L 18 20 M 34 14 L 34 20" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="18" y="8" width="16" height="12" rx="4" fill="none" stroke="#00C47A" stroke-width="2.5"/><line x1="16" y1="28" x2="36" y2="28" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="34" x2="28" y2="34" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">AI processing — transparently</h4>
         <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">Our platform uses AI services from carefully selected providers including Anthropic (Claude) and OpenAI (ChatGPT). We do not share your clients' personal data with AI service providers, and we never use your data to train public AI models.</p>
       </div>
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
-        <div style="font-size:28px;margin-bottom:14px;">📋</div>
+        <div style="margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 12 6 L 36 6 L 44 14 L 44 48 L 12 48 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M 36 6 L 36 14 L 44 14" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="18" y1="22" x2="38" y2="22" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="30" x2="38" y2="30" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="38" x2="30" y2="38" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">Full audit trail</h4>
         <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">Every WhatsApp conversation is logged, timestamped, and searchable. You always have a complete, evidenced record of all client communications on your platform — ready for any FCA or FOS request.</p>
       </div>
       <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:28px;">
-        <div style="font-size:28px;margin-bottom:14px;">🗂️</div>
+        <div style="margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" width="52" height="52" style="display:block;"><rect width="52" height="52" rx="10" fill="#0B1F3A"/><path d="M 12 8 L 40 8 L 40 36 L 28 36 L 22 44 L 22 36 L 12 36 Z" fill="none" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="20" y1="18" x2="32" y2="18" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="24" x2="32" y2="24" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="30" x2="28" y2="30" stroke="#00C47A" stroke-width="2.5" stroke-linecap="round"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:16px;font-weight:700;color:white;margin-bottom:10px;">Clean exit, always</h4>
         <p style="font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;">On termination of your contract, your data is returned or securely deleted at your instruction. Nothing is retained beyond what is legally required. You can leave cleanly at any time.</p>
       </div>
@@ -748,8 +749,8 @@
       <div class="section-eyebrow">Get in touch</div>
       <h3 style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--navy);margin-bottom:16px;">Let's talk about your brokerage.</h3>
       <p style="font-size:16px;color:var(--slate);margin-bottom:32px;line-height:1.7;">Tell us about your firm and what you're trying to achieve. We'll have a quick 15-minute chat to see if we're the right fit — no commitment required.</p>
-      <div class="contact-detail"><div class="contact-detail-icon">✉️</div><div class="contact-detail-text"><strong>Email us</strong>hello@goautomation.ai</div></div>
-      <div class="contact-detail"><div class="contact-detail-icon">📅</div><div class="contact-detail-text"><strong>Book a 15-minute chat</strong>Choose a time that suits you — we'll send a calendar invite with a video meeting link</div></div>
+      <div class="contact-detail"><div class="contact-detail-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44" height="44" style="display:block;"><rect width="44" height="44" rx="10" fill="#0B1F3A"/><path d="M 5 14 L 39 14 Q 42 14 42 17 L 42 36 Q 42 39 39 39 L 5 39 Q 2 39 2 36 L 2 17 Q 2 14 5 14 Z" fill="none" stroke="#00C47A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="22" x2="42" y2="22" stroke="#00C47A" stroke-width="2.2" stroke-linecap="round"/><line x1="14" y1="8" x2="14" y2="18" stroke="#00C47A" stroke-width="2.2" stroke-linecap="round"/><line x1="30" y1="8" x2="30" y2="18" stroke="#00C47A" stroke-width="2.2" stroke-linecap="round"/><circle cx="14" cy="30" r="2.5" fill="#00C47A"/><circle cx="22" cy="30" r="2.5" fill="#00C47A"/><circle cx="30" cy="30" r="2.5" fill="#00C47A"/></svg></div><div class="contact-detail-text"><strong>Email us</strong>hello@goautomation.ai</div></div>
+      <div class="contact-detail"><div class="contact-detail-icon" style="background:transparent;padding:0;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44" height="44" style="display:block;"><rect width="44" height="44" rx="10" fill="#E6FBF2"/><path d="M 5 14 L 39 14 Q 42 14 42 17 L 42 36 Q 42 39 39 39 L 5 39 Q 2 39 2 36 L 2 17 Q 2 14 5 14 Z" fill="none" stroke="#00C47A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="2" y1="22" x2="42" y2="22" stroke="#00C47A" stroke-width="2.2" stroke-linecap="round"/><line x1="14" y1="8" x2="14" y2="18" stroke="#00C47A" stroke-width="2.2" stroke-linecap="round"/><line x1="30" y1="8" x2="30" y2="18" stroke="#00C47A" stroke-width="2.2" stroke-linecap="round"/><circle cx="14" cy="30" r="2.5" fill="#00C47A"/><circle cx="22" cy="30" r="2.5" fill="#00C47A"/><circle cx="30" cy="30" r="2.5" fill="#00C47A"/></svg></div><div class="contact-detail-text"><strong>Book a 15-minute chat</strong>Choose a time that suits you — we'll send a calendar invite with a video meeting link</div></div>
       <div style="margin-top:32px;padding:24px;background:var(--navy);border-radius:var(--radius-lg);">
         <p style="font-size:14px;color:rgba(255,255,255,.88);line-height:1.7;"><span style="color:var(--green);font-weight:600;">No pressure.</span> A 15-minute call is all it takes to know whether this is right for your firm. If it is, we'll take it from there. If it isn't, we'll tell you honestly.</p>
       </div>
@@ -757,21 +758,21 @@
     <div class="contact-form">
       <h3 style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--navy);margin-bottom:28px;">Book a free 15-minute chat</h3>
       <div class="form-row">
-        <div class="form-group"><label>First name</label><input type="text" placeholder="Sarah"></div>
-        <div class="form-group"><label>Last name</label><input type="text" placeholder="Thompson"></div>
+        <div class="form-group"><label>First name</label><input type="text" placeholder=""></div>
+        <div class="form-group"><label>Last name</label><input type="text" placeholder=""></div>
       </div>
-      <div class="form-group"><label>Brokerage name</label><input type="text" placeholder="Thompson Mortgages"></div>
+      <div class="form-group"><label>Brokerage name</label><input type="text" placeholder=""></div>
       <div class="form-group"><label>Number of advisers</label>
         <select><option value="">Select</option><option>3–5 advisers</option><option>6–10 advisers</option><option>11–20 advisers</option><option>20+ advisers</option></select>
       </div>
-      <div class="form-group"><label>Email</label><input type="email" placeholder="sarah@thompsonmortgages.co.uk"></div>
-      <div class="form-group"><label>Phone</label><input type="tel" placeholder="07700 900000"></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder=""></div>
+      <div class="form-group"><label>Phone</label><input type="tel" placeholder=""></div>
       <div class="form-group"><label>What are you most interested in?</label>
         <select><option value="">Select an option</option><option>Lead follow-up and conversion</option><option>WhatsApp compliance solution</option><option>Protection fact find automation</option><option>Intelligent remortgage outreach</option><option>Consumer Duty post-completion journeys</option><option>Full suite</option></select>
       </div>
-      <div class="form-group"><label>Anything else you'd like us to know?</label><textarea placeholder="Tell us about your current setup, your biggest challenges, or anything that would help us prepare..."></textarea></div>
+      <div class="form-group"><label>Anything else you'd like us to know?</label><textarea placeholder=""></textarea></div>
       <div class="form-consent"><input type="checkbox" id="consent"><label for="consent">I agree to receive communication from Go Automation via email, phone, or WhatsApp in relation to my enquiry.</label></div>
-      <button type="button" class="btn-submit">Book My 15-Minute Chat →</button>
+      <button type="button" class="btn-submit" onclick="submitForm()">Book My 15-Minute Chat →</button>
     </div>
   </div>
 </section>
@@ -833,6 +834,42 @@
   function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
   function closeMenu(){document.getElementById('mobileMenu').classList.remove('open');}
   function toggleFaq(btn){btn.parentElement.classList.toggle('open');}
+
+  async function submitForm() {
+    // Collect form data
+    var fields = document.querySelectorAll('.contact-form input, .contact-form select, .contact-form textarea');
+    var data = {};
+    var labels = ['first_name','last_name','company_name','adviser_count','email','phone','interest','message'];
+    fields.forEach(function(f, i){ if(labels[i]) data[labels[i]] = f.value; });
+
+    // Basic validation
+    if(!data.first_name || !data.email) {
+      alert('Please enter your name and email address.');
+      return;
+    }
+
+    // Add tag and source
+    data.tags = 'website lead';
+    data.source = 'Go Automation Website';
+
+    // POST to GHL Inbound Webhook (Website Lead Form workflow)
+    var WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/PtM2395FzM037y7k8k6O/webhook-trigger/7b494d0c-6fa5-4c6e-bbc3-82edfe1ac358';
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors',
+        body: JSON.stringify(data)
+      });
+    } catch(e) {
+      // Silently continue even if webhook fails — don't block the user
+      console.log('Webhook error:', e);
+    }
+
+    // Redirect to calendar booking page
+    window.location.href = 'book.html';
+  }
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click',function(e){
       var id=this.getAttribute('href').slice(1);if(!id)return;
