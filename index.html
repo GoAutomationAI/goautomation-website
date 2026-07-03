@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Go Automation — WhatsApp AI for Mortgage Brokers</title>
 <meta name="description" content="AI-powered WhatsApp journeys for mortgage brokers. Lead conversion, protection, remortgage outreach and full FCA and Consumer Duty compliant communication — all automated.">
-<link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
-<link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
-<link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
-<link rel="manifest" href="favicon/site.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -763,12 +761,12 @@
       </div>
       <div class="form-group"><label>Brokerage name</label><input type="text" placeholder=""></div>
       <div class="form-group"><label>Number of advisers</label>
-        <select><option value="">Select</option><option>3–5 advisers</option><option>6–10 advisers</option><option>11–20 advisers</option><option>20+ advisers</option></select>
+        <select><option value="">Select</option><option>1–2 advisers</option><option>3–5 advisers</option><option>6–10 advisers</option><option>11–20 advisers</option><option>20+ advisers</option></select>
       </div>
       <div class="form-group"><label>Email</label><input type="email" placeholder=""></div>
       <div class="form-group"><label>Phone</label><input type="tel" placeholder=""></div>
       <div class="form-group"><label>What are you most interested in?</label>
-        <select><option value="">Select an option</option><option>Lead follow-up and conversion</option><option>WhatsApp compliance solution</option><option>Protection fact find automation</option><option>Intelligent remortgage outreach</option><option>Consumer Duty post-completion journeys</option><option>Full suite</option></select>
+        <select><option value="">Select an option</option><option>Lead follow-up and conversion</option><option>WhatsApp compliance solution</option><option>Protection AI</option><option>Intelligent remortgage outreach</option><option>Consumer Duty post-completion journeys</option><option>Full suite</option></select>
       </div>
       <div class="form-group"><label>Anything else you'd like us to know?</label><textarea placeholder=""></textarea></div>
       <div class="form-consent"><input type="checkbox" id="consent"><label for="consent">I agree to receive communication from Go Automation via email, phone, or WhatsApp in relation to my enquiry.</label></div>
@@ -852,8 +850,8 @@
     data.tags = 'website lead';
     data.source = 'Go Automation Website';
 
-    // POST to GHL Inbound Webhook (Website Lead Form workflow)
-    var WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/PtM2395FzM037y7k8k6O/webhook-trigger/7b494d0c-6fa5-4c6e-bbc3-82edfe1ac358';
+    // POST to GHL webhook — Dan to replace WEBHOOK_URL with actual GHL webhook URL
+    var WEBHOOK_URL = 'REPLACE_WITH_GHL_WEBHOOK_URL';
 
     try {
       await fetch(WEBHOOK_URL, {
@@ -867,8 +865,20 @@
       console.log('Webhook error:', e);
     }
 
-    // Redirect to calendar booking page
-    window.location.href = 'book.html';
+    // Build GHL calendar URL with pre-filled parameters so customer
+    // does not have to re-enter their details on the booking page
+    var calendarBase = 'https://api.goautomation.ai/widget/booking/ro3cWnFDnG9OPfn4cOd3';
+    var params = new URLSearchParams({
+      first_name:  data.first_name  || '',
+      last_name:   data.last_name   || '',
+      email:       data.email       || '',
+      phone:       data.phone       || '',
+      company:     data.company_name || '',
+    });
+
+    // Redirect to book.html passing parameters so the calendar iframe
+    // can load with pre-filled details
+    window.location.href = 'book.html?' + params.toString();
   }
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click',function(e){
