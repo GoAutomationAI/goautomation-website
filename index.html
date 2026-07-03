@@ -856,11 +856,16 @@
     var WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/PtM2395FzM037y7k8k6O/webhook-trigger/7b494d0c-6fa5-4c6e-bbc3-82edfe1ac358';
 
     try {
+      // Send as form-urlencoded. A URLSearchParams body makes the browser
+      // set a CORS-safelisted Content-Type, so it survives mode:'no-cors'.
+      // (application/json does NOT: no-cors strips that header and downgrades
+      // it to text/plain, which the GHL webhook rejects — dropping the data.)
+      var body = new URLSearchParams();
+      Object.keys(data).forEach(function(k){ body.append(k, data[k]); });
       await fetch(WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         mode: 'no-cors',
-        body: JSON.stringify(data)
+        body: body
       });
     } catch(e) {
       // Silently continue even if webhook fails — don't block the user
