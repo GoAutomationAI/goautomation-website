@@ -75,12 +75,15 @@
     '#ga-cc p{margin:0;max-width:70ch;color:rgba(255,255,255,.9)}',
     '#ga-cc a{color:#00C47A;text-decoration:underline}',
     '#ga-cc .ga-cc-btns{display:flex;gap:10px;flex-shrink:0}',
-    '#ga-cc button{font:inherit;font-weight:600;cursor:pointer;border-radius:999px;',
-    'padding:10px 22px;border:1px solid rgba(255,255,255,.45);background:transparent;color:#fff}',
-    '#ga-cc button:hover{border-color:#fff}',
-    '#ga-cc button[data-cc="accept"]{background:#00C47A;border-color:#00C47A;color:#062}',
-    '#ga-cc button[data-cc="accept"]:hover{background:#00d886;border-color:#00d886}',
-    '#ga-cc button:focus-visible{outline:3px solid #fff;outline-offset:2px}',
+    /* Accept and Decline are deliberately identical in size, weight and
+       solidity. ICO guidance requires the reject option to be as prominent
+       as accept, so neither is a ghost/outline button. */
+    '#ga-cc button{font:inherit;font-size:14px;font-weight:700;cursor:pointer;',
+    'border-radius:999px;padding:12px 28px;min-width:140px;border:2px solid transparent;',
+    'background:#fff;color:#0B1F3A}',
+    '#ga-cc button[data-cc="accept"]{background:#00C47A;color:#052e21}',
+    '#ga-cc button:hover{opacity:.88}',
+    '#ga-cc button:focus-visible{outline:3px solid #fff;outline-offset:3px}',
     '@media(max-width:620px){#ga-cc .ga-cc-in{padding:16px;gap:14px}',
     '#ga-cc .ga-cc-btns{width:100%}#ga-cc button{flex:1}}'
   ].join('');
