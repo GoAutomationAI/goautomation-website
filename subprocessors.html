@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Start cookieyes banner -->
+<script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/9969935f96178671145f4a3cc018cdf0/script.js"></script>
+<!-- End cookieyes banner -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sub-Processors — Go Automation AI Ltd</title>
+<link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+<link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+<link rel="manifest" href="favicon/site.webmanifest">
+
+<!-- Meta Pixel Code - held by CookieYes until advertisement consent -->
+<script type="text/javascript" data-cookieyes="cookieyes-advertisement">
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1987469928639044');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --navy: #0B1F3A; --green: #00C47A; --slate: #5B7080; --offwhite: #F7F9FB; --border: rgba(11,31,58,0.10); --radius: 12px; }
+body { font-family: 'Inter', sans-serif; color: var(--navy); background: var(--offwhite); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+nav { background: var(--navy); padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo img { height: 48px; width: 48px; border-radius: 50%; object-fit: contain; }
+.nav-logo-text { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 19px; color: white; line-height: 1.1; }
+.nav-logo-sub { font-size: 11px; font-weight: 600; color: var(--green); letter-spacing: 0.04em; }
+.nav-back { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 999px; transition: all 0.2s; }
+.nav-back:hover { color: white; border-color: rgba(255,255,255,0.5); }
+.doc-wrap { max-width: 960px; margin: 0 auto; padding: 60px 24px 80px; }
+.doc-header { background: var(--navy); border-radius: var(--radius) var(--radius) 0 0; padding: 40px 48px 36px; }
+.doc-header h1 { font-family: 'Sora', sans-serif; font-size: 36px; font-weight: 700; color: white; margin-bottom: 10px; }
+.doc-meta { font-size: 14px; color: rgba(255,255,255,0.65); }
+.doc-body { background: white; border-radius: 0 0 var(--radius) var(--radius); padding: 48px; box-shadow: 0 4px 24px rgba(11,31,58,0.08); }
+.doc-section { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+.doc-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.doc-section h2 { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 14px; display: flex; gap: 12px; align-items: center; }
+.doc-section p { font-size: 15px; color: var(--slate); line-height: 1.75; margin-bottom: 12px; }
+.doc-section p:last-child { margin-bottom: 0; }
+.doc-section a { color: var(--green); }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; }
+.doc-section table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+.doc-section table th { background: var(--offwhite); color: var(--slate); font-weight: 600; padding: 12px 16px; text-align: left; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+.doc-section table td { padding: 14px 16px; border-top: 1px solid var(--border); color: var(--slate); vertical-align: top; line-height: 1.65; }
+.doc-section table td:first-child { color: var(--navy); font-weight: 600; white-space: nowrap; }
+.pending { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(11,31,58,0.06); color: var(--slate); border: 1px solid var(--border); white-space: nowrap; }
+.contact-box { background: var(--navy); border-radius: var(--radius); padding: 28px 32px; margin-top: 40px; }
+.contact-box h3 { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 12px; }
+.contact-box p { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 6px; }
+.contact-box a { color: var(--green); text-decoration: none; }
+.doc-footer { text-align: center; margin-top: 32px; font-size: 13px; color: var(--slate); line-height: 1.8; }
+@media(max-width:640px){ nav{padding:0 16px;} .doc-body{padding:28px 20px;} .doc-wrap{padding:32px 12px 60px;} .doc-header{padding:28px 20px;} .doc-header h1{font-size:26px;} }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+
+    <div>
+      <div class="nav-logo-text">Go Automation</div>
+      <div class="nav-logo-sub">WhatsApp AI Platform</div>
+    </div>
+  </a>
+  <a href="index.html" class="nav-back">← Back to main site</a>
+</nav>
+<div class="doc-wrap">
+  <div class="doc-header">
+    <h1>Sub-Processors</h1>
+    <div class="doc-meta">Version 1.6 &nbsp;&middot;&nbsp; 23 August 2026</div>
+  </div>
+  <div class="doc-body">
+    <div class="doc-section">
+      <p>Go Automation AI Ltd uses the following sub-processors to deliver the Services. We&rsquo;ll give at least 30 days&rsquo; notice before adding a new sub-processor that processes Client personal data, as set out in our <a href="data-processing-agreement.html">Data Processing Agreement</a> — check this page for the current list.</p>
+      <div class="table-scroll">
+      <table>
+        <tr><th>Sub-processor</th><th>What they do</th><th>Location</th></tr>
+        <tr>
+          <td>HighLevel, Inc.<br>(&ldquo;GoHighLevel&rdquo;)</td>
+          <td>CRM and automation platform, the technical platform used to send/receive WhatsApp messages via your own connected WhatsApp Business Account, and delivery of platform-generated SMS and email messages</td>
+          <td>United States (Dallas, Texas); processing on AWS/Google Cloud infrastructure. Transfers safeguarded by EU Standard Contractual Clauses, the UK Transfer Addendum, and the UK Extension to the EU-U.S. Data Privacy Framework.</td>
+        </tr>
+        <tr>
+          <td>OpenAI<br>(OpenAI OpCo, LLC)</td>
+          <td>AI language model processing of documents, fact-find content, and conversational messaging</td>
+          <td>United States (transfer safeguards per our signed OpenAI Data Processing Addendum)</td>
+        </tr>
+        <tr>
+          <td>Google</td>
+          <td>Communications and productivity services (including Gmail for our own business correspondence), Google Meet for video conferencing, and Google Drive for temporary storage of a customer spreadsheet you&rsquo;ve sent us, before we import it into GoHighLevel</td>
+          <td>Transfers safeguarded by the Google Cloud Data Processing Addendum (accepted 22 August 2026), incorporating Standard Contractual Clauses and the UK Extension to the EU-U.S. Data Privacy Framework. Exact processing/storage region to confirm.</td>
+        </tr>
+        <tr>
+          <td>Anthropic</td>
+          <td>Our business Claude Team account is sometimes used to check a customer spreadsheet you&rsquo;ve sent us for data-integrity issues (e.g. values shifted between columns) before we import it into GoHighLevel</td>
+          <td>United States. Transfers safeguarded by Anthropic&rsquo;s Data Processing Addendum, automatically incorporated into its Commercial Terms of Service, including Standard Contractual Clauses and a UK Addendum.</td>
+        </tr>
+        <tr>
+          <td>Cloud hosting providers</td>
+          <td>Infrastructure hosting</td>
+          <td><span class="pending">To confirm</span></td>
+        </tr>
+      </table>
+      </div>
+    </div>
+    <div class="doc-section"><h2>A Note on WhatsApp</h2>
+      <p>WhatsApp messages are sent and received via your own WhatsApp Business Account, which you connect directly to your own Meta Business Manager account. Meta Platforms is not one of our sub-processors — your relationship with Meta for your own connected account is separate from, and your own responsibility alongside, your use of our platform.</p>
+    </div>
+    <div class="contact-box"><h3>Questions About Our Sub-Processors?</h3><p>Contact us at <a href="mailto:hello@goautomation.ai">hello@goautomation.ai</a></p><p>Go Automation AI Ltd, Suite A4, Skylon Court, Coldnose Road, Rotherwas, Hereford, England, HR2 6JS</p></div>
+  </div>
+  <div class="doc-footer">
+  <p>Go Automation AI Ltd &mdash; Registered in England and Wales &mdash; Company No. 14400611 &mdash; VAT No. GB485558833</p>
+  <p>Registered office: Suite A4, Skylon Court, Coldnose Road, Rotherwas, Hereford, England, HR2 6JS</p>
+  <p style="margin-top:8px;">&copy; 2025 Go Automation AI Ltd. All rights reserved.</p>
+  <p style="margin-top:8px;"><a href="#" class="cky-banner-element" style="color:var(--green);">Cookie Preferences</a></p>
+</div>
+</div>
+</body></html>
